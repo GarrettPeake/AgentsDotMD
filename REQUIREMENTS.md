@@ -99,28 +99,33 @@ The system is backed by a curated **prompt repository** — a structured collect
 
 ### 3.7 GitHub App (Marketplace)
 
+The GitHub App is the primary in-GitHub integration. It is **user-initiated** — all generation begins with the user explicitly triggering the wizard from within their repository. There is no automatic webhook-based generation, because at repo creation time there is no content to infer a tech stack from and no config file to read.
+
 | ID | Requirement |
 |----|-------------|
 | FR-650 | The system SHALL be published as a GitHub App available on the GitHub Marketplace. |
-| FR-651 | The GitHub App SHALL listen for `repository.created` webhook events to trigger automatic `agent.md` generation for new repositories. |
-| FR-652 | When a new repository is created, the App SHALL detect the project's language/framework (via repo metadata, `.gitattributes`, or initial files) and suggest or auto-generate an appropriate `agent.md`. |
-| FR-653 | The App SHALL allow users to configure a default preset (technology + options) at the organization or user-account level, so all new repos receive a consistent baseline `agent.md`. |
-| FR-654 | The App SHALL support per-repository configuration overrides via a `.agentsdotmd.yml` config file in the repo root. |
-| FR-655 | The App SHALL deliver the generated `agent.md` via pull request (not direct commit) so the user can review before merging. |
-| FR-656 | The App configuration page (on GitHub) SHALL link back to the AgentsDotMD web UI for full technology/option selection. |
-| FR-657 | The App SHALL support a manual trigger — users can invoke generation on demand via a repository dispatch event or a comment command (e.g., `/generate-agent-md`). |
-| FR-658 | The App SHALL support organization-wide installation, applying to all current and future repositories under that org. |
+| FR-651 | The App SHALL add a user-accessible entry point within the GitHub UI for installed repositories (e.g., a button, menu item, or link in the repository's toolbar/settings). |
+| FR-652 | When the user triggers the App, it SHALL open the AgentsDotMD wizard — either embedded in GitHub or as a redirect to the AgentsDotMD web UI with the target repository pre-selected. |
+| FR-653 | The wizard SHALL present the full technology selection and option configuration flow (same as the standalone web UI). |
+| FR-654 | After the user completes the wizard, the App SHALL deliver the generated `agent.md` (and optional template files) via pull request so the user can review before merging. |
+| FR-655 | The App SHALL support organization-wide installation, making it available across all repositories under that org. |
+| FR-656 | The App SHALL support re-running — users can trigger the wizard again to regenerate or update their `agent.md` at any time. |
+| FR-657 | The App SHALL allow users to save a default preset at the org or account level, which pre-fills the wizard selections (but the user still confirms before generation). |
+| FR-658 | The App SHALL support a manual trigger via issue/PR comment command (e.g., `/generate-agent-md`) that opens or links to the wizard for that repository. |
 
 ### 3.8 GitHub Action
+
+The GitHub Action is for users who want to **regenerate** their `agent.md` on a schedule or on-demand, after they have already configured their selections. It reads from a committed `.agentsdotmd.yml` config file — it does not present a wizard. The initial config file is produced by the web UI or the GitHub App wizard.
 
 | ID | Requirement |
 |----|-------------|
 | FR-670 | The system SHALL provide a reusable GitHub Action (`agentsdotmd/generate-action`) that users can add to any workflow. |
-| FR-671 | The Action SHALL accept a configuration file path or inline technology/option selections as inputs. |
-| FR-672 | The Action SHALL support a `config-file` input that points to a `.agentsdotmd.yml` in the repository, defining the desired technologies, options, and output path. |
+| FR-671 | The Action SHALL read its configuration from a `.agentsdotmd.yml` file committed to the repository. |
+| FR-672 | The Action SHALL NOT present an interactive wizard — it is a non-interactive regeneration tool that uses a pre-existing config. |
 | FR-673 | The Action SHALL generate the `agent.md` and either commit it directly or open a PR, based on a configurable `mode` input (`commit` or `pull-request`). |
-| FR-674 | The Action SHALL support being triggered on `create` (new repo/branch), `workflow_dispatch` (manual), or on a cron schedule (periodic refresh as prompt content is updated). |
+| FR-674 | The Action SHALL support `workflow_dispatch` (manual) and cron schedule triggers for periodic regeneration as upstream prompt content is updated. |
 | FR-675 | The Action SHALL pull the latest prompt fragments from the AgentsDotMD prompt repository (via API or published artifact) at runtime, so users always get up-to-date guidance. |
+| FR-676 | The web UI and GitHub App wizard SHALL offer an "Export config" option that generates the `.agentsdotmd.yml` file for use with the Action. |
 
 ### 3.9 Repository Templates
 
@@ -244,20 +249,21 @@ TechnologyCombination
 4. User selects target repo, branch, and file path.
 5. System commits the file(s) to the repository.
 
-### 6.3 GitHub App Flow (Automatic on Repo Creation)
+### 6.3 GitHub App Flow (User-Initiated from Repository)
 1. User installs the AgentsDotMD GitHub App (from Marketplace) on their account or org.
-2. User configures a default preset via the App's settings page (links to AgentsDotMD web UI).
-3. User creates a new repository on GitHub.
-4. The App receives the `repository.created` webhook.
-5. The App resolves configuration: repo-level `.agentsdotmd.yml` (if present) > account/org default preset > auto-detection from repo metadata.
-6. The App generates the `agent.md` and opens a pull request on the new repo.
-7. User reviews and merges the PR.
+2. User navigates to a repository where the App is installed.
+3. User clicks the AgentsDotMD entry point (button/link) in the repository UI.
+4. The App opens the AgentsDotMD wizard (embedded or via redirect to the web UI, with the repo pre-selected).
+5. User walks through the wizard: selects technologies, configures options, previews the output.
+6. User confirms generation.
+7. The App creates a pull request containing the `agent.md` (and optional template files).
+8. User reviews and merges the PR.
 
-### 6.4 GitHub Action Flow
-1. User adds the `agentsdotmd/generate-action` to a workflow in their repo.
-2. User commits a `.agentsdotmd.yml` config file specifying technologies, options, and output path.
-3. On the configured trigger (repo creation, manual dispatch, or cron), the Action runs.
-4. The Action fetches the latest prompt fragments and generates the `agent.md`.
+### 6.4 GitHub Action Flow (Regeneration)
+1. User has previously generated a config via the web UI or GitHub App wizard.
+2. User exports or commits a `.agentsdotmd.yml` config file to their repo.
+3. User adds the `agentsdotmd/generate-action` to a workflow (triggered on manual dispatch or cron).
+4. When the Action runs, it reads `.agentsdotmd.yml`, fetches the latest prompt fragments, and regenerates the `agent.md`.
 5. The Action commits directly or opens a PR based on the configured mode.
 
 ### 6.5 Template Flow
