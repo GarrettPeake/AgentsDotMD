@@ -86,7 +86,7 @@ The system is backed by a curated **prompt repository** — a structured collect
 | FR-503 | The system SHALL support versioning of prompt fragments so that updates don't silently change previously generated outputs. |
 | FR-504 | Contributors SHALL be able to submit new prompt fragments or technologies through a defined contribution process. |
 
-### 3.6 GitHub Integration
+### 3.6 GitHub Integration — Direct Commit
 
 | ID | Requirement |
 |----|-------------|
@@ -97,7 +97,42 @@ The system is backed by a curated **prompt repository** — a structured collect
 | FR-604 | The system SHALL support creating a new repository from a starter template (agent.md + boilerplate files). |
 | FR-605 | The system SHALL support updating an existing `agent.md` in a repository (detect and offer to overwrite or merge). |
 
-### 3.7 User Accounts and Saved Configurations
+### 3.7 GitHub App (Marketplace)
+
+| ID | Requirement |
+|----|-------------|
+| FR-650 | The system SHALL be published as a GitHub App available on the GitHub Marketplace. |
+| FR-651 | The GitHub App SHALL listen for `repository.created` webhook events to trigger automatic `agent.md` generation for new repositories. |
+| FR-652 | When a new repository is created, the App SHALL detect the project's language/framework (via repo metadata, `.gitattributes`, or initial files) and suggest or auto-generate an appropriate `agent.md`. |
+| FR-653 | The App SHALL allow users to configure a default preset (technology + options) at the organization or user-account level, so all new repos receive a consistent baseline `agent.md`. |
+| FR-654 | The App SHALL support per-repository configuration overrides via a `.agentsdotmd.yml` config file in the repo root. |
+| FR-655 | The App SHALL deliver the generated `agent.md` via pull request (not direct commit) so the user can review before merging. |
+| FR-656 | The App configuration page (on GitHub) SHALL link back to the AgentsDotMD web UI for full technology/option selection. |
+| FR-657 | The App SHALL support a manual trigger — users can invoke generation on demand via a repository dispatch event or a comment command (e.g., `/generate-agent-md`). |
+| FR-658 | The App SHALL support organization-wide installation, applying to all current and future repositories under that org. |
+
+### 3.8 GitHub Action
+
+| ID | Requirement |
+|----|-------------|
+| FR-670 | The system SHALL provide a reusable GitHub Action (`agentsdotmd/generate-action`) that users can add to any workflow. |
+| FR-671 | The Action SHALL accept a configuration file path or inline technology/option selections as inputs. |
+| FR-672 | The Action SHALL support a `config-file` input that points to a `.agentsdotmd.yml` in the repository, defining the desired technologies, options, and output path. |
+| FR-673 | The Action SHALL generate the `agent.md` and either commit it directly or open a PR, based on a configurable `mode` input (`commit` or `pull-request`). |
+| FR-674 | The Action SHALL support being triggered on `create` (new repo/branch), `workflow_dispatch` (manual), or on a cron schedule (periodic refresh as prompt content is updated). |
+| FR-675 | The Action SHALL pull the latest prompt fragments from the AgentsDotMD prompt repository (via API or published artifact) at runtime, so users always get up-to-date guidance. |
+
+### 3.9 Repository Templates
+
+| ID | Requirement |
+|----|-------------|
+| FR-690 | The system SHALL maintain a set of GitHub template repositories for common technology stacks. |
+| FR-691 | Each template repository SHALL include a pre-generated `agent.md` plus relevant starter/boilerplate files for that stack. |
+| FR-692 | Template repositories SHALL be listed and linked from the AgentsDotMD web UI. |
+| FR-693 | The web UI SHALL provide a "Create repo from template" flow that uses the GitHub API to instantiate a new repository from the selected template. |
+| FR-694 | Template repositories SHALL be periodically regenerated to stay in sync with prompt repository updates. |
+
+### 3.10 User Accounts and Saved Configurations
 
 | ID | Requirement |
 |----|-------------|
@@ -106,7 +141,7 @@ The system is backed by a curated **prompt repository** — a structured collect
 | FR-702 | Authenticated users SHALL be able to load and re-use saved presets. |
 | FR-703 | Authenticated users SHALL be able to share presets via a link. |
 
-### 3.8 Web Interface
+### 3.11 Web Interface
 
 | ID | Requirement |
 |----|-------------|
@@ -181,6 +216,12 @@ TechnologyCombination
   ├── technology_ids[]
   ├── additional PromptFragment[]
   └── additional TemplateFile[]
+
+.agentsdotmd.yml (per-repo config file)
+  ├── technologies: [{id, options: {key: value}}]
+  ├── output_path (default: "agent.md")
+  ├── output_filename (default: "agent.md")
+  └── include_templates: bool
 ```
 
 ---
@@ -203,7 +244,29 @@ TechnologyCombination
 4. User selects target repo, branch, and file path.
 5. System commits the file(s) to the repository.
 
-### 6.3 Preset Flow
+### 6.3 GitHub App Flow (Automatic on Repo Creation)
+1. User installs the AgentsDotMD GitHub App (from Marketplace) on their account or org.
+2. User configures a default preset via the App's settings page (links to AgentsDotMD web UI).
+3. User creates a new repository on GitHub.
+4. The App receives the `repository.created` webhook.
+5. The App resolves configuration: repo-level `.agentsdotmd.yml` (if present) > account/org default preset > auto-detection from repo metadata.
+6. The App generates the `agent.md` and opens a pull request on the new repo.
+7. User reviews and merges the PR.
+
+### 6.4 GitHub Action Flow
+1. User adds the `agentsdotmd/generate-action` to a workflow in their repo.
+2. User commits a `.agentsdotmd.yml` config file specifying technologies, options, and output path.
+3. On the configured trigger (repo creation, manual dispatch, or cron), the Action runs.
+4. The Action fetches the latest prompt fragments and generates the `agent.md`.
+5. The Action commits directly or opens a PR based on the configured mode.
+
+### 6.5 Template Flow
+1. User browses template repositories on the AgentsDotMD website.
+2. User selects a template matching their desired stack.
+3. User clicks "Create repo from template" and provides a repo name.
+4. System creates the new repo via GitHub API with the template's files (including `agent.md`).
+
+### 6.6 Preset Flow
 1. Authenticated user completes selections.
 2. User saves the configuration as a named preset.
 3. Later, user loads the preset and generates an updated file (prompt content may have been updated).
