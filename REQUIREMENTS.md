@@ -66,7 +66,7 @@ The system is backed by a curated, **community-maintained prompt repository** â€
 | FR-303 | The generated file SHALL be well-structured markdown with clear headings and sections. |
 | FR-304 | The user SHALL be able to preview the generated file before downloading. |
 | FR-305 | The user SHALL be able to download the generated file. |
-| FR-306 | The user SHALL be able to choose the output filename (`AGENTS.md`, `CLAUDE.md`, `AGENTS.md`, or custom). |
+| FR-306 | The user SHALL be able to choose the output filename (`AGENTS.md`, `CLAUDE.md`, or custom). |
 
 ### 3.4 Template / Starter Package Generation
 
@@ -141,7 +141,7 @@ The GitHub Action is for users who want to **regenerate** their `AGENTS.md` on a
 | FR-670 | The system SHALL provide a reusable GitHub Action (`agentsdotmd/generate-action`) that users can add to any workflow. |
 | FR-671 | The Action SHALL read its configuration from a `.agentsdotmd.yml` file committed to the repository. |
 | FR-672 | The Action SHALL NOT present an interactive wizard â€” it is a non-interactive regeneration tool that uses a pre-existing config. |
-| FR-673 | The Action SHALL generate the generated file and either commit it directly or open a PR, based on a configurable `mode` input (`commit` or `pull-request`). |
+| FR-673 | The Action SHALL generate the output file and either commit it directly or open a PR, based on a configurable `mode` input (`commit` or `pull-request`). |
 | FR-674 | The Action SHALL support `workflow_dispatch` (manual) and cron schedule triggers for periodic regeneration as upstream prompt content is updated. |
 | FR-675 | The Action SHALL pull the latest prompt fragments from the AgentsDotMD prompt repository (via API or published artifact) at runtime, so users always get up-to-date guidance. |
 | FR-676 | The web UI and GitHub App wizard SHALL offer an "Export config" option that generates the `.agentsdotmd.yml` file for use with the Action. |
