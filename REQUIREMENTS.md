@@ -1,0 +1,221 @@
+# AgentsDotMD - Requirements Document
+
+## 1. Product Overview
+
+AgentsDotMD is a tool that generates customized `agent.md` / `claude.md` files containing detailed, opinionated best-practice instructions for AI-assisted development. Users select their technology stack and configuration preferences, and the system produces a tailored markdown file ready to drop into a new project.
+
+The system is backed by a curated **prompt repository** — a structured collection of technology-specific directives, best practices, and integration guidance maintained as a central knowledge base.
+
+---
+
+## 2. Core Concepts
+
+### 2.1 Prompt Repository
+- A structured collection of prompt fragments organized by technology and topic.
+- Each fragment is a self-contained block of guidance (e.g., "How to structure BLoC state classes in Flutter").
+- Fragments can be composed together to form a complete `agent.md` file.
+
+### 2.2 Technology
+- A top-level entity representing a framework, language, or platform (e.g., Flutter, Cloudflare Workers, Next.js, Rust).
+- Each technology has its own set of prompt fragments and configurable options.
+
+### 2.3 Technology Combination
+- A pairing or grouping of two or more technologies that produces additional, integration-specific guidance (e.g., Flutter + Cloudflare Workers, Next.js + Drizzle ORM).
+- Combination prompts supplement — not replace — the individual technology prompts.
+
+### 2.4 Option
+- A configurable choice within a technology that affects which prompt fragments are included.
+- Options can be mutually exclusive (pick one: BLoC vs Riverpod) or independent toggles (enable/disable dependency injection guidance).
+
+### 2.5 Template / Starter Package
+- A set of boilerplate files associated with a technology or combination (e.g., `wrangler.toml`, `package.json`, directory scaffolding).
+- Templates are an optional output alongside the generated `agent.md`.
+
+---
+
+## 3. Functional Requirements
+
+### 3.1 Technology Selection
+
+| ID | Requirement |
+|----|-------------|
+| FR-100 | The system SHALL present a catalog of available technologies to the user. |
+| FR-101 | The user SHALL be able to select one or more technologies for their project. |
+| FR-102 | The system SHALL detect valid technology combinations and surface combination-specific options when applicable. |
+| FR-103 | The system SHALL warn or prevent selection of known incompatible technology combinations. |
+
+### 3.2 Option Selection
+
+| ID | Requirement |
+|----|-------------|
+| FR-200 | For each selected technology, the system SHALL present the available options. |
+| FR-201 | Options SHALL be typed as one of: single-select (pick one from a group), multi-select (toggle on/off), or freeform (user-provided value, e.g., project name). |
+| FR-202 | Options SHALL have sensible defaults so a user can generate output without customizing every option. |
+| FR-203 | The system SHALL enforce mutual exclusivity constraints (e.g., selecting BLoC disables Riverpod and vice versa). |
+| FR-204 | The system SHALL support option dependencies — selecting one option may reveal or hide other options. |
+
+### 3.3 Agent.md Generation
+
+| ID | Requirement |
+|----|-------------|
+| FR-300 | The system SHALL generate a single `agent.md` (or `claude.md`) file based on the user's selections. |
+| FR-301 | The generated file SHALL include a header section identifying the selected technologies and options. |
+| FR-302 | The generated file SHALL compose prompt fragments in a logical order: general project guidance first, then technology-specific sections, then integration/combination sections. |
+| FR-303 | The generated file SHALL be well-structured markdown with clear headings and sections. |
+| FR-304 | The user SHALL be able to preview the generated file before downloading. |
+| FR-305 | The user SHALL be able to download the generated file. |
+| FR-306 | The user SHALL be able to choose the output filename (`agent.md`, `claude.md`, `CLAUDE.md`, or custom). |
+
+### 3.4 Template / Starter Package Generation
+
+| ID | Requirement |
+|----|-------------|
+| FR-400 | The system SHALL optionally generate starter/boilerplate files alongside the `agent.md`. |
+| FR-401 | Each technology or combination MAY define a set of template files (e.g., config files, directory structures, starter source files). |
+| FR-402 | Template files SHALL support variable interpolation for user-provided values (e.g., project name, package name). |
+| FR-403 | The user SHALL be able to download all generated files as a zip archive. |
+| FR-404 | The system SHALL clearly distinguish between the `agent.md` output and template files in the UI. |
+
+### 3.5 Prompt Repository Management
+
+| ID | Requirement |
+|----|-------------|
+| FR-500 | The prompt repository SHALL be stored as structured data (files, database, or both). |
+| FR-501 | Each prompt fragment SHALL have metadata: technology, category, option dependencies, sort order, and version. |
+| FR-502 | The system SHALL support adding new technologies, options, and prompt fragments without code changes (data-driven). |
+| FR-503 | The system SHALL support versioning of prompt fragments so that updates don't silently change previously generated outputs. |
+| FR-504 | Contributors SHALL be able to submit new prompt fragments or technologies through a defined contribution process. |
+
+### 3.6 GitHub Integration
+
+| ID | Requirement |
+|----|-------------|
+| FR-600 | The system SHALL support authenticating with GitHub via OAuth. |
+| FR-601 | An authenticated user SHALL be able to commit the generated `agent.md` directly to a selected repository. |
+| FR-602 | The system SHALL allow the user to select the target repository and branch for the commit. |
+| FR-603 | The system SHALL allow the user to select the file path within the repository (default: root). |
+| FR-604 | The system SHALL support creating a new repository from a starter template (agent.md + boilerplate files). |
+| FR-605 | The system SHALL support updating an existing `agent.md` in a repository (detect and offer to overwrite or merge). |
+
+### 3.7 User Accounts and Saved Configurations
+
+| ID | Requirement |
+|----|-------------|
+| FR-700 | The system SHALL allow unauthenticated usage for basic generation and download. |
+| FR-701 | Authenticated users SHALL be able to save their technology/option configurations as named presets. |
+| FR-702 | Authenticated users SHALL be able to load and re-use saved presets. |
+| FR-703 | Authenticated users SHALL be able to share presets via a link. |
+
+### 3.8 Web Interface
+
+| ID | Requirement |
+|----|-------------|
+| FR-800 | The system SHALL provide a web-based UI for all user-facing functionality. |
+| FR-801 | The UI SHALL present a step-by-step workflow: select technologies -> configure options -> preview -> download/commit. |
+| FR-802 | The UI SHALL provide search and filtering for the technology catalog. |
+| FR-803 | The UI SHALL be responsive and functional on both desktop and mobile browsers. |
+| FR-804 | The UI SHALL provide real-time preview of the generated output as options are toggled. |
+
+---
+
+## 4. Non-Functional Requirements
+
+### 4.1 Performance
+
+| ID | Requirement |
+|----|-------------|
+| NFR-100 | File generation SHALL complete in under 2 seconds for any combination of selections. |
+| NFR-101 | The technology catalog SHALL load in under 1 second. |
+
+### 4.2 Scalability
+
+| ID | Requirement |
+|----|-------------|
+| NFR-200 | The prompt repository SHALL support at least 100 technologies and 1,000 prompt fragments without architectural changes. |
+| NFR-201 | The system SHALL support concurrent users without degradation. |
+
+### 4.3 Extensibility
+
+| ID | Requirement |
+|----|-------------|
+| NFR-300 | Adding a new technology SHALL require only data/content changes, not code changes. |
+| NFR-301 | The prompt fragment schema SHALL be flexible enough to support future content types (e.g., code snippets, links, diagrams). |
+| NFR-302 | The system architecture SHALL support future output formats beyond markdown (e.g., `.cursorrules`, IDE-specific config). |
+
+### 4.4 Reliability
+
+| ID | Requirement |
+|----|-------------|
+| NFR-400 | The system SHALL be available for unauthenticated use even if GitHub integration is down. |
+| NFR-401 | Generation SHALL work entirely client-side or with graceful degradation if the backend is unavailable. |
+
+### 4.5 Security
+
+| ID | Requirement |
+|----|-------------|
+| NFR-500 | GitHub OAuth tokens SHALL be stored securely and scoped to minimum required permissions. |
+| NFR-501 | The system SHALL not store user repository content beyond what is needed for the current operation. |
+
+---
+
+## 5. Data Model (Conceptual)
+
+```
+Technology
+  ├── id, name, description, icon
+  ├── Option[]
+  │     ├── id, label, description, type (single-select | multi-select | freeform)
+  │     ├── choices[] (for select types)
+  │     ├── default value
+  │     └── dependencies (other option values that gate this option)
+  ├── PromptFragment[]
+  │     ├── id, title, content (markdown)
+  │     ├── sort_order
+  │     ├── option_conditions (which option values include this fragment)
+  │     └── version
+  └── TemplateFile[]
+        ├── path, content (with interpolation placeholders)
+        └── option_conditions
+
+TechnologyCombination
+  ├── technology_ids[]
+  ├── additional PromptFragment[]
+  └── additional TemplateFile[]
+```
+
+---
+
+## 6. User Flows
+
+### 6.1 Basic Flow (Unauthenticated)
+1. User lands on the website.
+2. User browses or searches the technology catalog.
+3. User selects one or more technologies.
+4. System presents relevant options for each selected technology (and any detected combinations).
+5. User configures options (or accepts defaults).
+6. System generates and displays a preview of the `agent.md`.
+7. User downloads the file (or zip with templates).
+
+### 6.2 GitHub Flow (Authenticated)
+1. User authenticates via GitHub OAuth.
+2. User follows the basic flow (steps 2-6 above).
+3. User chooses "Commit to GitHub" instead of download.
+4. User selects target repo, branch, and file path.
+5. System commits the file(s) to the repository.
+
+### 6.3 Preset Flow
+1. Authenticated user completes selections.
+2. User saves the configuration as a named preset.
+3. Later, user loads the preset and generates an updated file (prompt content may have been updated).
+
+---
+
+## 7. Future Considerations (Out of Scope for V1, Documented for Awareness)
+
+- **CLI tool**: A command-line interface for generating `agent.md` files without the web UI.
+- **VS Code / IDE extension**: Generate or update `agent.md` from within the editor.
+- **Community marketplace**: Users can publish and share prompt fragment packs.
+- **AI-assisted customization**: Use an LLM to further tailor the generated output based on a natural language project description.
+- **Project analysis**: Point the tool at an existing repo and have it infer the right technologies and options automatically.
+- **Monorepo support**: Generate multiple `agent.md` files for different packages within a monorepo.
+- **Diff/merge for updates**: When a user regenerates, show a diff against their current file and allow selective merging.
