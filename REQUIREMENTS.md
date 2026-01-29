@@ -85,8 +85,29 @@ The system is backed by a curated **prompt repository** — a structured collect
 | FR-502 | The system SHALL support adding new technologies, options, and prompt fragments without code changes (data-driven). |
 | FR-503 | The system SHALL support versioning of prompt fragments so that updates don't silently change previously generated outputs. |
 | FR-504 | Contributors SHALL be able to submit new prompt fragments or technologies through a defined contribution process. |
+| FR-505 | The prompt repository SHALL be backed by a Git repository (e.g., on GitHub) so that all changes are tracked, reviewable, and reversible. |
 
-### 3.6 GitHub Integration — Direct Commit
+### 3.6 Community Contribution (In-App Editing)
+
+The prompt library is designed to be **highly dynamic and community-maintained**. Users viewing generated output in the web UI can directly propose edits to the underlying prompt fragments — fixing inaccuracies, improving best practices, or adding missing guidance — without leaving the application.
+
+| ID | Requirement |
+|----|-------------|
+| FR-550 | The web UI SHALL display prompt fragments in an **editable** view during the preview step, allowing the user to modify fragment text inline. |
+| FR-551 | When a user modifies a prompt fragment, the UI SHALL clearly distinguish between their local edits (for their own download) and a **submission** proposing the change back to the prompt repository. |
+| FR-552 | The user SHALL be able to submit their edits as a proposed change to the prompt repository via a "Submit Improvement" action. |
+| FR-553 | The system SHALL support two submission modes, selectable by the user: |
+|     | **(a) GitHub PR from user's account** — The user authenticates with GitHub, and the system forks the prompt repository into the user's account (or uses an existing fork) and opens a pull request with the proposed changes. The PR is attributed to the user. |
+|     | **(b) Backend-mediated submission** — The user submits the change without GitHub auth. The backend collects the proposed edit and creates a PR on the prompt repository on the user's behalf (attributed to a bot account), including the user's description/rationale. |
+| FR-554 | Each submission SHALL require the user to provide a brief description or rationale for the change. |
+| FR-555 | The system SHALL show the diff between the original fragment and the user's proposed edit before submission. |
+| FR-556 | The system SHALL support proposing **new** prompt fragments (not just edits to existing ones) — e.g., "This technology is missing guidance on X." |
+| FR-557 | The system SHALL support proposing new options or new technologies through the same submission flow. |
+| FR-558 | Submitted changes SHALL go through a review process (PR review on the prompt repository) before being merged into the live prompt library. |
+| FR-559 | The system SHALL notify the submitter (if authenticated) when their proposed change is merged or closed. |
+| FR-560 | The web UI SHALL display a contribution indicator on fragments that have been recently updated, along with a link to the change history. |
+
+### 3.7 GitHub Integration — Direct Commit
 
 | ID | Requirement |
 |----|-------------|
@@ -97,7 +118,7 @@ The system is backed by a curated **prompt repository** — a structured collect
 | FR-604 | The system SHALL support creating a new repository from a starter template (agent.md + boilerplate files). |
 | FR-605 | The system SHALL support updating an existing `agent.md` in a repository (detect and offer to overwrite or merge). |
 
-### 3.7 GitHub App (Marketplace)
+### 3.8 GitHub App (Marketplace)
 
 The GitHub App is the primary in-GitHub integration. It is **user-initiated** — all generation begins with the user explicitly triggering the wizard from within their repository. There is no automatic webhook-based generation, because at repo creation time there is no content to infer a tech stack from and no config file to read.
 
@@ -113,7 +134,7 @@ The GitHub App is the primary in-GitHub integration. It is **user-initiated** �
 | FR-657 | The App SHALL allow users to save a default preset at the org or account level, which pre-fills the wizard selections (but the user still confirms before generation). |
 | FR-658 | The App SHALL support a manual trigger via issue/PR comment command (e.g., `/generate-agent-md`) that opens or links to the wizard for that repository. |
 
-### 3.8 GitHub Action
+### 3.9 GitHub Action
 
 The GitHub Action is for users who want to **regenerate** their `agent.md` on a schedule or on-demand, after they have already configured their selections. It reads from a committed `.agentsdotmd.yml` config file — it does not present a wizard. The initial config file is produced by the web UI or the GitHub App wizard.
 
@@ -127,7 +148,7 @@ The GitHub Action is for users who want to **regenerate** their `agent.md` on a 
 | FR-675 | The Action SHALL pull the latest prompt fragments from the AgentsDotMD prompt repository (via API or published artifact) at runtime, so users always get up-to-date guidance. |
 | FR-676 | The web UI and GitHub App wizard SHALL offer an "Export config" option that generates the `.agentsdotmd.yml` file for use with the Action. |
 
-### 3.9 Repository Templates
+### 3.10 Repository Templates
 
 | ID | Requirement |
 |----|-------------|
@@ -137,7 +158,7 @@ The GitHub Action is for users who want to **regenerate** their `agent.md` on a 
 | FR-693 | The web UI SHALL provide a "Create repo from template" flow that uses the GitHub API to instantiate a new repository from the selected template. |
 | FR-694 | Template repositories SHALL be periodically regenerated to stay in sync with prompt repository updates. |
 
-### 3.10 User Accounts and Saved Configurations
+### 3.11 User Accounts and Saved Configurations
 
 | ID | Requirement |
 |----|-------------|
@@ -146,7 +167,7 @@ The GitHub Action is for users who want to **regenerate** their `agent.md` on a 
 | FR-702 | Authenticated users SHALL be able to load and re-use saved presets. |
 | FR-703 | Authenticated users SHALL be able to share presets via a link. |
 
-### 3.11 Web Interface
+### 3.12 Web Interface
 
 | ID | Requirement |
 |----|-------------|
@@ -272,7 +293,24 @@ TechnologyCombination
 3. User clicks "Create repo from template" and provides a repo name.
 4. System creates the new repo via GitHub API with the template's files (including `agent.md`).
 
-### 6.6 Preset Flow
+### 6.6 Community Contribution Flow (Authenticated — User's Own PR)
+1. User is viewing the generated `agent.md` preview in the web UI.
+2. User notices a prompt fragment that could be improved (inaccurate advice, missing nuance, outdated practice).
+3. User clicks "Edit" on the fragment, making changes inline.
+4. User clicks "Submit Improvement" and provides a brief rationale.
+5. System forks the prompt repository into the user's GitHub account (or uses existing fork).
+6. System creates a branch, commits the change, and opens a PR against the prompt repository — attributed to the user.
+7. Prompt repository maintainers review and merge (or request changes).
+8. User is notified when the PR is resolved.
+
+### 6.7 Community Contribution Flow (Unauthenticated — Backend-Mediated)
+1. User is viewing the generated `agent.md` preview (not logged in, or prefers not to use their GitHub account).
+2. User edits a fragment inline and clicks "Submit Improvement."
+3. User provides a rationale and optionally an email for follow-up.
+4. The backend creates a PR on the prompt repository on the user's behalf via a bot account, including the rationale in the PR description.
+5. Prompt repository maintainers review and merge.
+
+### 6.8 Preset Flow
 1. Authenticated user completes selections.
 2. User saves the configuration as a named preset.
 3. Later, user loads the preset and generates an updated file (prompt content may have been updated).
@@ -283,7 +321,7 @@ TechnologyCombination
 
 - **CLI tool**: A command-line interface for generating `agent.md` files without the web UI.
 - **VS Code / IDE extension**: Generate or update `agent.md` from within the editor.
-- **Community marketplace**: Users can publish and share prompt fragment packs.
+- **Community marketplace**: Users can publish and share curated prompt fragment packs beyond the core repository.
 - **AI-assisted customization**: Use an LLM to further tailor the generated output based on a natural language project description.
 - **Project analysis**: Point the tool at an existing repo and have it infer the right technologies and options automatically.
 - **Monorepo support**: Generate multiple `agent.md` files for different packages within a monorepo.
