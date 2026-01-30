@@ -6,6 +6,7 @@ export class AppRoot extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.ready = new Promise(resolve => { this._resolveReady = resolve; });
   }
 
   async connectedCallback() {
@@ -21,6 +22,7 @@ export class AppRoot extends HTMLElement {
     template.innerHTML = html;
 
     this.shadowRoot.append(style, template.content.cloneNode(true));
+    this._resolveReady();
   }
 }
 
