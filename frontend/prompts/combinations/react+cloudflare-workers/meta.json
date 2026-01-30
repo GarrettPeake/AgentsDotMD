@@ -1,0 +1,4 @@
+{
+  "technologies": ["react", "cloudflare-workers"],
+  "description": "React frontend with Cloudflare Workers backend"
+}

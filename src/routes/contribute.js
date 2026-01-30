@@ -14,29 +14,25 @@ import { jsonResponse, errorResponse } from '../utils/response.js';
  * @returns {string} File path within the prompt repository.
  */
 function resolveFilePath(type, fragmentId) {
+  // All paths are relative to the repo root — prompts live in frontend/prompts/.
   if (type === 'new-tech') {
-    // New technology: place in technologies/<id>/fragments/<id>.md
-    return `technologies/${fragmentId}/fragments/${fragmentId}.md`;
+    return `frontend/prompts/technologies/${fragmentId}/fragments/${fragmentId}.md`;
   }
   if (type === 'new-fragment') {
-    // New fragment: fragmentId is expected to be in the form "tech/fragment-name"
-    // or a simple name; place under technologies directory
     if (fragmentId.includes('/')) {
       const [tech, name] = fragmentId.split('/');
-      return `technologies/${tech}/fragments/${name}.md`;
+      return `frontend/prompts/technologies/${tech}/fragments/${name}.md`;
     }
-    return `fragments/${fragmentId}.md`;
+    return `frontend/prompts/technologies/${fragmentId}/fragments/${fragmentId}.md`;
   }
-  // Edit existing fragment: fragmentId maps to technology path
-  // fragmentId format: "tech-name-fragment-name" — resolve to the technology directory
-  // For edits, the client provides the full path context via fragmentId
+  // Edit existing fragment
   if (fragmentId.includes('/')) {
-    return fragmentId;
+    return fragmentId.startsWith('frontend/') ? fragmentId : `frontend/prompts/${fragmentId}`;
   }
-  // Fallback: treat as a path under technologies
+  // Fallback: derive technology from the fragment ID prefix
   const parts = fragmentId.split('-');
   const tech = parts[0];
-  return `technologies/${tech}/fragments/${fragmentId}.md`;
+  return `frontend/prompts/technologies/${tech}/fragments/${fragmentId}.md`;
 }
 
 /**
