@@ -102,7 +102,7 @@ export class GithubCommit extends HTMLElement {
     var backBtn = self.shadowRoot.querySelector('[data-back-btn]');
     if (backBtn) {
       backBtn.addEventListener('click', function() {
-        eventBus.emit(NAVIGATE, '#/export');
+        eventBus.emit(NAVIGATE, '/export');
       });
     }
 

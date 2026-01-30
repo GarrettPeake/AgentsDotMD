@@ -51,16 +51,14 @@ export class FilePreview extends HTMLElement {
     var backBtn = this.shadowRoot.querySelector('[data-back-btn]');
     if (backBtn) {
       backBtn.addEventListener('click', function () {
-        location.hash = '#/configure';
-        eventBus.emit(NAVIGATE, { route: '/configure' });
+        eventBus.emit(NAVIGATE, '/configure');
       });
     }
 
     var continueBtn = this.shadowRoot.querySelector('[data-continue-btn]');
     if (continueBtn) {
       continueBtn.addEventListener('click', function () {
-        location.hash = '#/export';
-        eventBus.emit(NAVIGATE, { route: '/export' });
+        eventBus.emit(NAVIGATE, '/export');
       });
     }
 

@@ -44,16 +44,14 @@ export class OptionPanel extends HTMLElement {
     const backBtn = this.shadowRoot.querySelector('[data-back-btn]');
     if (backBtn) {
       backBtn.addEventListener('click', () => {
-        location.hash = '#/';
-        eventBus.emit(NAVIGATE, { route: '/' });
+        eventBus.emit(NAVIGATE, '/');
       });
     }
 
     const continueBtn = this.shadowRoot.querySelector('[data-continue-btn]');
     if (continueBtn) {
       continueBtn.addEventListener('click', () => {
-        location.hash = '#/preview';
-        eventBus.emit(NAVIGATE, { route: '/preview' });
+        eventBus.emit(NAVIGATE, '/preview');
       });
     }
 

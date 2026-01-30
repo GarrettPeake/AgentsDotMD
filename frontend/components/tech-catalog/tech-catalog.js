@@ -71,8 +71,7 @@ export class TechCatalog extends HTMLElement {
       continueBtn.addEventListener('click', () => {
         const selected = store.get('selectedTechIds');
         if (selected && selected.length > 0) {
-          location.hash = '#/configure';
-          eventBus.emit(NAVIGATE, { route: '/configure' });
+          eventBus.emit(NAVIGATE, '/configure');
         }
       });
     }

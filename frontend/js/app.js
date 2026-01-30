@@ -42,6 +42,7 @@ function createRouter(outlet) {
   router.register('/configure', 'option-panel');
   router.register('/preview', 'file-preview');
   router.register('/export', 'delivery-options');
+  router.register('/github-commit', 'github-commit');
 
   eventBus.on(NAVIGATE, (hash) => router.navigate(hash));
 
