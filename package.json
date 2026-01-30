@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:manifest": "node scripts/build-manifest.js",
-    "dev": "npm run build:manifest && wrangler dev",
-    "deploy": "npm run build:manifest && wrangler deploy"
+    "build": "node scripts/build-manifest.js",
+    "dev": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
-    "wrangler": "^3.99.0"
+    "wrangler": "^4.0.0"
   },
   "dependencies": {}
 }
