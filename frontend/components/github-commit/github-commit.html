@@ -1,0 +1,121 @@
+<div class="github-commit">
+  <div class="commit-header">
+    <h2 class="commit-title">Commit to GitHub</h2>
+    <p class="commit-description">Create a pull request with your generated files on a GitHub repository.</p>
+  </div>
+
+  <section class="auth-section" data-auth-section>
+    <div class="auth-unauthenticated" data-auth-unauthenticated>
+      <p class="auth-prompt">Sign in to access your repositories and create a pull request.</p>
+      <button class="auth-btn" type="button" data-auth-btn>
+        <span class="auth-btn-icon" aria-hidden="true">GH</span>
+        <span class="auth-btn-label">Sign in with GitHub</span>
+      </button>
+    </div>
+    <div class="auth-authenticated" data-auth-authenticated hidden>
+      <div class="auth-user-info" data-auth-user-info>
+        <span class="auth-user-badge">GH</span>
+        <span class="auth-user-name" data-auth-user-name></span>
+        <button class="auth-logout-btn" type="button" data-auth-logout-btn>Sign out</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="repo-section" data-repo-section hidden>
+    <h3 class="section-heading">Select Repository</h3>
+    <div class="repo-search-wrap">
+      <input class="repo-search" type="text" placeholder="Search repositories..." data-repo-search />
+    </div>
+    <div class="repo-list-container" data-repo-list-container>
+      <p class="repo-loading" data-repo-loading hidden>Loading repositories...</p>
+      <p class="repo-empty" data-repo-empty hidden>No repositories found.</p>
+      <ul class="repo-list" data-repo-list></ul>
+    </div>
+
+    <template data-template-repo-item>
+      <li class="repo-item" data-repo-item>
+        <div class="repo-item-info">
+          <span class="repo-item-name" data-repo-name></span>
+          <span class="repo-item-visibility" data-repo-visibility></span>
+        </div>
+        <p class="repo-item-description" data-repo-description></p>
+      </li>
+    </template>
+
+    <div class="new-repo-toggle" data-new-repo-toggle>
+      <button class="new-repo-toggle-btn" type="button" data-new-repo-toggle-btn>
+        <span class="new-repo-toggle-icon" aria-hidden="true">+</span>
+        <span>Create New Repository</span>
+      </button>
+    </div>
+
+    <div class="new-repo-fields" data-new-repo-fields hidden>
+      <div class="form-group">
+        <label class="form-label" for="new-repo-name">Repository Name</label>
+        <input class="form-input" type="text" id="new-repo-name" placeholder="my-project" data-new-repo-name />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="new-repo-description">Description</label>
+        <input class="form-input" type="text" id="new-repo-description" placeholder="A short description..." data-new-repo-description />
+      </div>
+      <div class="form-group form-group-inline">
+        <label class="form-checkbox-label">
+          <input class="form-checkbox" type="checkbox" data-new-repo-private />
+          <span>Private repository</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section class="pr-section" data-pr-section hidden>
+    <h3 class="section-heading">Pull Request Details</h3>
+
+    <div class="form-group">
+      <label class="form-label" for="file-path">File Path</label>
+      <input class="form-input form-input-mono" type="text" id="file-path" placeholder="/" data-file-path />
+      <span class="form-hint">Path within the repository (e.g. / or docs/)</span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="branch-name">Branch Name</label>
+      <input class="form-input form-input-mono" type="text" id="branch-name" data-branch-name />
+      <span class="form-hint">Auto-generated branch name for the pull request.</span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="commit-message">Commit Message</label>
+      <input class="form-input" type="text" id="commit-message" data-commit-message />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="pr-title">PR Title</label>
+      <input class="form-input" type="text" id="pr-title" data-pr-title />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="pr-body">PR Description</label>
+      <textarea class="form-textarea" id="pr-body" rows="4" data-pr-body></textarea>
+    </div>
+  </section>
+
+  <section class="status-section" data-status-section hidden>
+    <div class="status-box" data-status-box>
+      <p class="status-message" data-status-message></p>
+      <a class="status-link" data-status-link hidden target="_blank" rel="noopener noreferrer"></a>
+    </div>
+  </section>
+
+  <section class="actions-section" data-actions-section>
+    <div class="actions-row">
+      <button class="action-btn action-primary action-create-pr" type="button" data-create-pr-btn hidden>
+        <span class="action-btn-label" data-create-pr-label>Create Pull Request</span>
+      </button>
+      <button class="action-btn action-primary action-create-repo" type="button" data-create-repo-btn hidden>
+        <span class="action-btn-label">Create Repository</span>
+      </button>
+    </div>
+    <div class="actions-row actions-secondary">
+      <button class="action-btn action-back" type="button" data-back-btn>Back to Export</button>
+    </div>
+  </section>
+</div>

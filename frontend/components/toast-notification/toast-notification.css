@@ -1,0 +1,135 @@
+:host {
+  display: block;
+  position: fixed;
+  bottom: var(--space-lg, 1.5rem);
+  right: var(--space-lg, 1.5rem);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 1rem);
+  padding: var(--space-md, 1rem) var(--space-lg, 1.5rem);
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-text, #2B2B2B);
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-left: 6px solid var(--color-border, #2B2B2B);
+  box-shadow: 4px 4px 0 var(--color-text, #2B2B2B);
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: var(--font-weight-bold, 700);
+  max-width: 24rem;
+  pointer-events: auto;
+  transform: translateX(calc(100% + var(--space-lg, 1.5rem)));
+  transition: transform 0.3s ease;
+}
+
+.toast.visible {
+  transform: translateX(0);
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Toast types
+   -------------------------------------------------------------------------- */
+
+.toast[data-type="success"] {
+  border-left-color: var(--color-accent, #D94F04);
+}
+
+.toast[data-type="error"] {
+  border-left-color: #C0392B;
+}
+
+.toast[data-type="info"] {
+  border-left-color: var(--color-border, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Message
+   -------------------------------------------------------------------------- */
+
+.toast-message {
+  flex: 1;
+  line-height: var(--line-height, 1.6);
+}
+
+/* --------------------------------------------------------------------------
+   Close button
+   -------------------------------------------------------------------------- */
+
+.toast-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  padding: 0;
+  background: none;
+  border: 2px solid var(--color-border, #2B2B2B);
+  color: var(--color-text, #2B2B2B);
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: var(--font-weight-bold, 700);
+  cursor: pointer;
+  box-shadow: none;
+  transition: background-color 0.15s ease;
+}
+
+.toast-close:hover {
+  background-color: var(--color-text, #2B2B2B);
+  color: var(--color-surface, #FFFFFF);
+  box-shadow: none;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Slide-in animation
+   -------------------------------------------------------------------------- */
+
+@keyframes slideIn {
+  from {
+    transform: translateX(calc(100% + var(--space-lg, 1.5rem)));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100% + var(--space-lg, 1.5rem)));
+  }
+}
+
+.toast.slide-in {
+  animation: slideIn 0.3s ease forwards;
+}
+
+.toast.slide-out {
+  animation: slideOut 0.3s ease forwards;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  :host {
+    bottom: var(--space-md, 1rem);
+    right: var(--space-md, 1rem);
+    left: var(--space-md, 1rem);
+  }
+
+  .toast {
+    max-width: 100%;
+  }
+}

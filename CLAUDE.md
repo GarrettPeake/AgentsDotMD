@@ -8,14 +8,66 @@ There are no user accounts. GitHub OAuth is used only ephemerally for repository
 
 ## Current State
 
-The project is in the **design phase**. The following artifacts exist:
+The project has completed its **initial implementation**. The full application is scaffolded and built per the DESIGN.md specification.
+
+### What exists:
 
 - `REQUIREMENTS.md` — Full functional and non-functional requirements
 - `DESIGN.md` — Architecture and design document
 - `CLAUDE.md` — This file (project context and development rules)
 - `README.md` — Basic project readme
+- `package.json` — npm package with wrangler devDependency
+- `wrangler.toml` — Cloudflare Worker configuration with static asset routing
+- `.github/workflows/deploy.yml` — CI/CD pipeline for Cloudflare Workers deployment
 
-No implementation code has been written yet. The next step is to scaffold the Cloudflare Worker project and begin building the frontend SPA and backend API routes.
+### Backend (Cloudflare Worker):
+- `src/index.js` — Main fetch handler routing API vs static assets
+- `src/routes/auth.js` — GitHub OAuth flow (redirect + callback with postMessage)
+- `src/routes/github.js` — GitHub API proxy (repos, PRs, repo creation, App webhook/setup)
+- `src/routes/contribute.js` — Community contribution endpoints (authenticated + anonymous)
+- `src/utils/response.js` — JSON/error/CORS response helpers
+- `src/utils/github-client.js` — GitHub REST API wrapper class
+
+### Frontend Core:
+- `frontend/index.html` — SPA shell with CSP headers
+- `frontend/css/global.css` — Neo-brutalist design system with CSS custom properties
+- `frontend/css/utilities.css` — Shared utility classes
+- `frontend/js/store.js` — Reactive state store (pub/sub)
+- `frontend/js/event-bus.js` — Cross-component event system
+- `frontend/js/router.js` — Hash-based SPA router
+- `frontend/js/app.js` — Entry point, component registration, router setup
+- `frontend/js/github-auth.js` — OAuth client (popup + postMessage)
+- `frontend/js/prompt-loader.js` — Manifest + fragment loader from GitHub
+- `frontend/js/generator.js` — Markdown assembly engine (standard, inline, copy-paste modes)
+- `frontend/js/template-engine.js` — {{variable}} interpolation with HTML escaping
+- `frontend/js/zip-builder.js` — JSZip wrapper for zip downloads
+- `frontend/js/diff.js` — Unified diff computation (LCS-based)
+
+### Frontend Web Components (each = .html + .css + .js, strict language separation):
+- `app-root` — Layout shell with header, router outlet, footer
+- `step-wizard` — 4-step progress indicator (Select → Configure → Preview → Export)
+- `toast-notification` — Popup notifications (success/error/info)
+- `tech-catalog` — Technology grid with search and category filtering
+- `tech-card` — Individual technology card with toggle selection
+- `option-panel` — Dynamic options form (single-select, toggle, freeform) with dependency logic
+- `file-preview` — Markdown preview with inline editing and contribution suggestions
+- `template-preview` — Template file viewer with collapsible entries
+- `delivery-options` — Export step with download/inline/copy-paste modes
+- `filename-selector` — Output filename dropdown (AGENTS.md, CLAUDE.md, custom)
+- `github-commit` — GitHub PR creation form with repo selector
+- `contribution-modal` — Modal for suggesting changes to prompt fragments
+
+### Vendor:
+- `frontend/vendor/jszip.min.js` — JSZip stub (replace with real library for production)
+
+### Next steps:
+- Replace JSZip stub with the real JSZip library
+- Set up Cloudflare Worker secrets (GITHUB_CLIENT_SECRET, GITHUB_BOT_TOKEN)
+- Create the prompt repository (GarrettPeake/AgentsDotMD-prompts) with manifest.json and initial fragments
+- Configure GitHub OAuth App and GitHub App
+- Run `npm install` and `npx wrangler dev` for local development
+- Test the full flow end-to-end
+- Deploy to Cloudflare Workers
 
 ## Tech Stack
 
@@ -64,6 +116,32 @@ The backend never generates files, never processes prompt fragments, and never a
 - No cookies
 - OAuth tokens held only in browser JS memory, never persisted
 - No user accounts or profiles
+
+### Visual Design — Neo-Brutalist Minimalism
+
+The frontend uses a **minimalist, neo-brutalist** aesthetic. The design is intentionally stark, using bold typography, hard edges, and limited color to convey clarity and confidence.
+
+**Color Palette:**
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--color-bg` | `#FAF6F1` (parchment white) | Page and card backgrounds |
+| `--color-text` | `#2B2B2B` (charcoal black) | All body text, headings |
+| `--color-accent` | `#D94F04` (deep orange) | Buttons, links, selection highlights, active states |
+| `--color-accent-hover` | `#B84303` (darker orange) | Hover/focus states for accent elements |
+| `--color-border` | `#2B2B2B` (charcoal black) | Card borders, dividers — bold and visible |
+| `--color-muted` | `#6B6B6B` (gray) | Secondary text, placeholders |
+| `--color-surface` | `#FFFFFF` (white) | Elevated cards, modals |
+
+**Neo-Brutalist Principles:**
+
+- **Bold borders**: 2px+ solid black borders on cards, inputs, and buttons. No subtle 1px gray borders.
+- **No border-radius** on primary elements (cards, buttons). Squared-off corners reinforce the brutalist feel. Minor radius (2px) allowed only on small inline elements like badges.
+- **No drop shadows** for decoration. A solid offset shadow (e.g., `4px 4px 0 var(--color-text)`) may be used on buttons and cards for depth.
+- **Bold typography**: Headings are large and heavy-weight. Use a monospace or geometric sans-serif font.
+- **High contrast**: Accent color is used sparingly — for CTAs, active states, and key interactive elements only. The majority of the UI is black-on-white.
+- **Flat design**: No gradients, no glossy effects. Solid fills only.
+- **Generous whitespace**: Ample padding and margin. Content breathes.
 
 ### Prompt Repository as Data Source
 

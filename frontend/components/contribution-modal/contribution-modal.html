@@ -1,0 +1,68 @@
+<div class="modal-overlay" data-overlay hidden>
+  <div class="modal-box" data-modal-box>
+    <div class="modal-header">
+      <h2 class="modal-title">Suggest a Change</h2>
+      <button class="modal-close" type="button" data-close-btn aria-label="Close modal">&times;</button>
+    </div>
+
+    <div class="modal-body" data-modal-body>
+      <section class="fragment-info" data-fragment-info>
+        <div class="fragment-meta">
+          <span class="fragment-label">Fragment:</span>
+          <span class="fragment-id" data-fragment-id></span>
+        </div>
+        <div class="fragment-meta">
+          <span class="fragment-label">Technology:</span>
+          <span class="fragment-technology" data-fragment-technology></span>
+        </div>
+      </section>
+
+      <section class="diff-section" data-diff-section>
+        <h3 class="section-heading">Changes</h3>
+        <div class="diff-view" data-diff-view></div>
+      </section>
+
+      <section class="new-fragment-section" data-new-fragment-section hidden>
+        <h3 class="section-heading">New Fragment</h3>
+        <div class="form-group">
+          <label class="form-label" for="contrib-technology">Technology</label>
+          <input class="form-input" type="text" id="contrib-technology" placeholder="e.g. react, flutter" data-new-technology />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="contrib-category">Category</label>
+          <input class="form-input" type="text" id="contrib-category" placeholder="e.g. state-management" data-new-category />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="contrib-content">Content</label>
+          <textarea class="form-textarea" id="contrib-content" rows="8" placeholder="Markdown content for the new fragment..." data-new-content></textarea>
+        </div>
+      </section>
+
+      <section class="rationale-section">
+        <h3 class="section-heading">Rationale</h3>
+        <p class="rationale-hint">Please explain why this change should be made. This will be included in the pull request description.</p>
+        <textarea class="form-textarea rationale-textarea" rows="4" placeholder="Explain your reasoning..." required data-rationale></textarea>
+      </section>
+
+      <section class="submit-section">
+        <h3 class="section-heading">Submit</h3>
+        <div class="submit-options">
+          <button class="submit-btn submit-authenticated" type="button" data-submit-auth-btn>
+            <span class="submit-btn-icon" aria-hidden="true">GH</span>
+            <span class="submit-btn-label">Submit with GitHub Account</span>
+          </button>
+          <button class="submit-btn submit-anonymous" type="button" data-submit-anon-btn>
+            <span class="submit-btn-label">Submit Anonymously</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="status-section" data-status-section hidden>
+        <div class="status-box" data-status-box>
+          <p class="status-message" data-status-message></p>
+          <a class="status-link" data-status-link hidden target="_blank" rel="noopener noreferrer"></a>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

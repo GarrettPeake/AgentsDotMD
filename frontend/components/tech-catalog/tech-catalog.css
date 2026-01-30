@@ -1,0 +1,241 @@
+/* ==========================================================================
+   tech-catalog — Technology grid with search and category filters
+   Neo-brutalist: solid borders, no radius, offset shadows, bold type
+   ========================================================================== */
+
+:host {
+  display: block;
+}
+
+.catalog {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+
+.catalog-header {
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+.catalog-title {
+  font-size: var(--text-3xl, 2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-sm, 0.5rem) 0;
+  color: var(--color-text, #2B2B2B);
+}
+
+.catalog-description {
+  font-size: var(--text-lg, 1.125rem);
+  color: var(--color-muted, #6B6B6B);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 48rem;
+}
+
+/* --------------------------------------------------------------------------
+   Controls: Search + Category Filters
+   -------------------------------------------------------------------------- */
+
+.catalog-controls {
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+.search-wrapper {
+  margin-bottom: var(--space-md, 1rem);
+}
+
+.search-wrapper input {
+  display: block;
+  width: 100%;
+  padding: var(--space-md, 1rem) var(--space-lg, 1.5rem);
+  font-size: var(--text-lg, 1.125rem);
+  font-family: inherit;
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-text, #2B2B2B);
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  transition: border-color 0.15s ease;
+}
+
+.search-wrapper input:focus {
+  outline: none;
+  border-color: var(--color-accent, #D94F04);
+  box-shadow: 0 0 0 1px var(--color-accent, #D94F04);
+}
+
+.search-wrapper input::placeholder {
+  color: var(--color-muted, #6B6B6B);
+}
+
+/* --------------------------------------------------------------------------
+   Category Filter Buttons
+   -------------------------------------------------------------------------- */
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm, 0.5rem);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: var(--space-xs, 0.25rem);
+}
+
+.category-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-text, #2B2B2B);
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: none;
+  user-select: none;
+}
+
+.filter-btn:hover {
+  box-shadow: 2px 2px 0 var(--color-border, #2B2B2B);
+}
+
+.filter-btn.active {
+  background-color: var(--color-accent, #D94F04);
+  color: var(--color-surface, #FFFFFF);
+  border-color: var(--color-accent, #D94F04);
+  box-shadow: 2px 2px 0 var(--color-border, #2B2B2B);
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid var(--color-accent, #D94F04);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Grid
+   -------------------------------------------------------------------------- */
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg, 1.5rem);
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+/* --------------------------------------------------------------------------
+   Empty state
+   -------------------------------------------------------------------------- */
+
+.catalog-empty {
+  text-align: center;
+  padding: var(--space-3xl, 4rem) var(--space-md, 1rem);
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+.empty-text {
+  font-size: var(--text-lg, 1.125rem);
+  color: var(--color-muted, #6B6B6B);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Footer: selection count + continue button
+   -------------------------------------------------------------------------- */
+
+.catalog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md, 1rem);
+  padding-top: var(--space-lg, 1.5rem);
+  border-top: 2px solid var(--color-border, #2B2B2B);
+}
+
+.selection-count {
+  font-size: var(--text-base, 1rem);
+  font-weight: 700;
+  color: var(--color-muted, #6B6B6B);
+}
+
+.continue-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md, 1rem) var(--space-2xl, 3rem);
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 900;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--color-accent, #D94F04);
+  color: var(--color-surface, #FFFFFF);
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--color-border, #2B2B2B);
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.continue-btn:hover {
+  background-color: var(--color-accent-hover, #B84303);
+  box-shadow: 2px 2px 0 var(--color-border, #2B2B2B);
+  transform: translate(2px, 2px);
+}
+
+.continue-btn:active {
+  box-shadow: 0 0 0 var(--color-border, #2B2B2B);
+  transform: translate(4px, 4px);
+}
+
+.continue-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: 4px 4px 0 var(--color-border, #2B2B2B);
+  transform: none;
+}
+
+.continue-btn:disabled:hover {
+  background-color: var(--color-accent, #D94F04);
+  box-shadow: 4px 4px 0 var(--color-border, #2B2B2B);
+  transform: none;
+}
+
+.continue-btn:focus-visible {
+  outline: 2px solid var(--color-accent, #D94F04);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .catalog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-footer {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .continue-btn {
+    width: 100%;
+  }
+}

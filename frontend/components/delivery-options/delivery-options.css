@@ -1,0 +1,355 @@
+/* ==========================================================================
+   delivery-options — Export step with delivery mode selection
+   Neo-brutalist: solid borders, no radius, offset shadows, bold type
+   ========================================================================== */
+
+:host {
+  display: block;
+}
+
+.delivery-options {
+  width: 100%;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+
+.delivery-header {
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+.delivery-title {
+  font-size: var(--text-3xl, 2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-xs, 0.25rem) 0;
+  color: var(--color-text, #2B2B2B);
+}
+
+.delivery-description {
+  font-size: var(--text-base, 1rem);
+  color: var(--color-muted, #6B6B6B);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Filename section
+   -------------------------------------------------------------------------- */
+
+.filename-section {
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+/* --------------------------------------------------------------------------
+   Mode section
+   -------------------------------------------------------------------------- */
+
+.mode-section {
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+.mode-heading {
+  font-size: var(--text-xl, 1.25rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-md, 1rem) 0;
+  color: var(--color-text, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Mode cards — radio card group
+   -------------------------------------------------------------------------- */
+
+.mode-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md, 1rem);
+}
+
+@media (min-width: 768px) {
+  .mode-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.mode-card {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.mode-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.mode-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  padding: var(--space-lg, 1.5rem);
+  border: 2px solid var(--color-border, #2B2B2B);
+  background-color: var(--color-surface, #FFFFFF);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.mode-card:hover .mode-card-inner {
+  box-shadow: 4px 4px 0 var(--color-border, #2B2B2B);
+}
+
+.mode-radio:checked + .mode-card-inner {
+  border-color: var(--color-accent, #D94F04);
+  border-width: 3px;
+  box-shadow: 6px 6px 0 var(--color-accent, #D94F04);
+}
+
+.mode-radio:focus-visible + .mode-card-inner {
+  outline: 2px solid var(--color-accent, #D94F04);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Mode card content
+   -------------------------------------------------------------------------- */
+
+.mode-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.04em;
+  color: var(--color-surface, #FFFFFF);
+  background-color: var(--color-text, #2B2B2B);
+  border: 2px solid var(--color-border, #2B2B2B);
+}
+
+.mode-radio:checked ~ .mode-card-inner .mode-icon,
+.mode-card-inner .mode-radio:checked + .mode-icon {
+  background-color: var(--color-accent, #D94F04);
+}
+
+.mode-label {
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 900;
+  color: var(--color-text, #2B2B2B);
+  letter-spacing: -0.01em;
+}
+
+.mode-description {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--color-muted, #6B6B6B);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Summary section
+   -------------------------------------------------------------------------- */
+
+.summary-section {
+  margin-bottom: var(--space-xl, 2rem);
+}
+
+.summary-heading {
+  font-size: var(--text-xl, 1.25rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-md, 1rem) 0;
+  color: var(--color-text, #2B2B2B);
+}
+
+.summary-box {
+  border: 2px solid var(--color-border, #2B2B2B);
+  padding: var(--space-md, 1rem) var(--space-lg, 1.5rem);
+  background-color: var(--color-surface, #FFFFFF);
+}
+
+.summary-empty {
+  font-size: var(--text-base, 1rem);
+  color: var(--color-muted, #6B6B6B);
+  margin: 0;
+}
+
+.summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 0.25rem);
+}
+
+.summary-list[hidden] {
+  display: none;
+}
+
+.summary-item {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 700;
+  color: var(--color-text, #2B2B2B);
+  padding: var(--space-xs, 0.25rem) 0;
+  border-bottom: 1px solid var(--color-border, #2B2B2B);
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item-icon {
+  margin-right: var(--space-sm, 0.5rem);
+  color: var(--color-accent, #D94F04);
+  font-weight: 900;
+}
+
+.summary-count {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  color: var(--color-accent, #D94F04);
+  margin-top: var(--space-sm, 0.5rem);
+  padding-top: var(--space-sm, 0.5rem);
+  border-top: 2px solid var(--color-border, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Action buttons
+   -------------------------------------------------------------------------- */
+
+.actions-section {
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.actions-row {
+  display: flex;
+  gap: var(--space-md, 1rem);
+  flex-wrap: wrap;
+}
+
+.actions-secondary {
+  margin-top: var(--space-md, 1rem);
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm, 0.5rem);
+  padding: var(--space-md, 1rem) var(--space-xl, 2rem);
+  font-size: var(--text-base, 1rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.action-btn:hover {
+  box-shadow: 2px 2px 0 var(--color-text, #2B2B2B);
+  transform: translate(2px, 2px);
+}
+
+.action-btn:active {
+  box-shadow: 0 0 0 var(--color-text, #2B2B2B);
+  transform: translate(4px, 4px);
+}
+
+.action-btn:focus-visible {
+  outline: 2px solid var(--color-accent, #D94F04);
+  outline-offset: 2px;
+}
+
+/* Primary action */
+
+.action-primary {
+  background-color: var(--color-accent, #D94F04);
+  color: var(--color-surface, #FFFFFF);
+  box-shadow: 4px 4px 0 var(--color-text, #2B2B2B);
+  flex: 1;
+  min-width: 12rem;
+}
+
+.action-primary:hover {
+  background-color: var(--color-accent-hover, #B84303);
+  box-shadow: 2px 2px 0 var(--color-text, #2B2B2B);
+}
+
+.action-primary:active {
+  box-shadow: 0 0 0 var(--color-text, #2B2B2B);
+}
+
+/* GitHub action */
+
+.action-github {
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-text, #2B2B2B);
+  box-shadow: 4px 4px 0 var(--color-text, #2B2B2B);
+  flex: 1;
+  min-width: 12rem;
+}
+
+.action-github:hover {
+  background-color: var(--color-bg, #FAF6F1);
+  box-shadow: 2px 2px 0 var(--color-text, #2B2B2B);
+}
+
+.action-github:active {
+  box-shadow: 0 0 0 var(--color-text, #2B2B2B);
+}
+
+/* Back action */
+
+.action-back {
+  background-color: transparent;
+  color: var(--color-text, #2B2B2B);
+  border-color: var(--color-border, #2B2B2B);
+  box-shadow: none;
+  padding: var(--space-sm, 0.5rem) var(--space-lg, 1.5rem);
+  font-size: var(--text-sm, 0.875rem);
+  text-transform: none;
+  font-weight: 700;
+}
+
+.action-back:hover {
+  background-color: var(--color-bg, #FAF6F1);
+  box-shadow: 2px 2px 0 var(--color-text, #2B2B2B);
+}
+
+.action-back:active {
+  box-shadow: 0 0 0 var(--color-text, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .delivery-title {
+    font-size: var(--text-2xl, 1.5rem);
+  }
+
+  .mode-card-inner {
+    padding: var(--space-md, 1rem);
+  }
+
+  .actions-row {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}

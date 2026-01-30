@@ -1,0 +1,49 @@
+<div class="option-panel">
+  <header class="panel-header">
+    <h2 class="panel-title">Configure Options</h2>
+    <p class="panel-description">Fine-tune settings for each selected technology. Defaults are pre-filled based on common best practices.</p>
+  </header>
+
+  <div class="options-container" data-options-container></div>
+
+  <div class="panel-empty" data-empty-state hidden>
+    <p class="empty-text">No technologies selected. Go back and select at least one technology.</p>
+  </div>
+
+  <template data-template-single-select>
+    <div class="option-group option-single-select" data-option-group>
+      <label class="option-label" data-option-label></label>
+      <div class="radio-list" data-radio-list></div>
+    </div>
+  </template>
+
+  <template data-template-radio-choice>
+    <label class="radio-row">
+      <span class="radio-indicator"></span>
+      <input type="radio" class="radio-input" />
+      <span class="radio-label" data-radio-label></span>
+    </label>
+  </template>
+
+  <template data-template-toggle>
+    <div class="option-group option-toggle" data-option-group>
+      <label class="toggle-row">
+        <span class="checkbox-indicator"></span>
+        <input type="checkbox" class="checkbox-input" />
+        <span class="toggle-label" data-toggle-label></span>
+      </label>
+    </div>
+  </template>
+
+  <template data-template-freeform>
+    <div class="option-group option-freeform" data-option-group>
+      <label class="option-label" data-option-label></label>
+      <input type="text" class="freeform-input" data-freeform-input />
+    </div>
+  </template>
+
+  <div class="panel-footer">
+    <button type="button" class="back-btn" data-back-btn>Back</button>
+    <button type="button" class="continue-btn" data-continue-btn>Continue</button>
+  </div>
+</div>

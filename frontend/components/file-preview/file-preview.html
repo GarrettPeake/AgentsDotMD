@@ -1,0 +1,59 @@
+<div class="file-preview">
+  <header class="preview-header">
+    <h2 class="preview-title">Preview &amp; Edit</h2>
+    <p class="preview-description">Review your generated file. Edit individual fragments or suggest changes to the community.</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <span class="filename-display" data-filename-display></span>
+    </div>
+    <div class="toolbar-right">
+      <button class="regenerate-btn" data-regenerate-btn type="button">Regenerate</button>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn tab-active" data-tab-btn="generated" type="button">Generated File</button>
+    <button class="tab-btn" data-tab-btn="templates" type="button">Templates</button>
+  </div>
+
+  <div class="tab-panel" data-tab-panel="generated">
+    <div class="preview-content" data-preview-content></div>
+  </div>
+
+  <div class="tab-panel" data-tab-panel="templates" hidden>
+    <div class="templates-content" data-templates-content></div>
+  </div>
+
+  <template data-template-fragment-block>
+    <div class="fragment-block" data-fragment-id="">
+      <div class="fragment-header">
+        <div class="fragment-info">
+          <span class="fragment-tech" data-fragment-tech></span>
+          <span class="fragment-category" data-fragment-category></span>
+        </div>
+        <div class="fragment-actions">
+          <span class="edited-badge" data-edited-badge hidden>Edited</span>
+          <button class="fragment-edit-btn" data-edit-btn type="button">Edit</button>
+          <button class="fragment-suggest-btn" data-suggest-btn type="button">Suggest Change</button>
+        </div>
+      </div>
+      <div class="fragment-display" data-fragment-display>
+        <pre class="fragment-pre"><code class="fragment-code" data-fragment-code></code></pre>
+      </div>
+      <div class="fragment-edit-area" data-edit-area hidden>
+        <textarea class="fragment-textarea" data-fragment-textarea></textarea>
+        <div class="edit-actions">
+          <button class="edit-save-btn" data-save-btn type="button">Save</button>
+          <button class="edit-cancel-btn" data-cancel-btn type="button">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <footer class="preview-footer">
+    <button class="back-btn" data-back-btn type="button">Back</button>
+    <button class="continue-btn" data-continue-btn type="button">Continue</button>
+  </footer>
+</div>

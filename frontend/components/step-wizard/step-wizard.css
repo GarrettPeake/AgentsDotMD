@@ -1,0 +1,133 @@
+:host {
+  display: block;
+}
+
+.wizard {
+  width: 100%;
+}
+
+.steps {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  min-width: 0;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  min-width: 2.25rem;
+  border: 2px solid var(--color-muted, #6B6B6B);
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-muted, #6B6B6B);
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.step-connector {
+  display: block;
+  flex: 1;
+  height: 2px;
+  background-color: var(--color-muted, #6B6B6B);
+  margin: 0 var(--space-xs, 0.25rem);
+}
+
+/* Last step has no connector */
+.step:last-child .step-connector {
+  display: none;
+}
+
+.step-label {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Active step
+   -------------------------------------------------------------------------- */
+
+.step[data-state="active"] .step-number {
+  background-color: var(--color-accent, #D94F04);
+  border-color: var(--color-accent, #D94F04);
+  color: var(--color-surface, #FFFFFF);
+  box-shadow: 3px 3px 0 var(--color-text, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Completed step
+   -------------------------------------------------------------------------- */
+
+.step[data-state="completed"] .step-number {
+  background-color: var(--color-text, #2B2B2B);
+  border-color: var(--color-text, #2B2B2B);
+  color: var(--color-surface, #FFFFFF);
+}
+
+.step[data-state="completed"] .step-connector {
+  background-color: var(--color-text, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Upcoming step (default)
+   -------------------------------------------------------------------------- */
+
+.step[data-state="upcoming"] .step-number {
+  background-color: var(--color-surface, #FFFFFF);
+  border-color: var(--color-muted, #6B6B6B);
+  color: var(--color-muted, #6B6B6B);
+}
+
+.step[data-state="upcoming"] .step-connector {
+  background-color: var(--color-muted, #6B6B6B);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: show labels on wider screens
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 640px) {
+  .step {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-xs, 0.25rem);
+  }
+
+  .step-connector {
+    position: absolute;
+    top: 1.125rem;
+    left: calc(50% + 1.25rem);
+    right: calc(-50% + 1.25rem);
+    margin: 0;
+  }
+
+  .step-label {
+    display: block;
+    font-size: var(--text-xs, 0.75rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--color-muted, #6B6B6B);
+    white-space: nowrap;
+    margin-top: var(--space-xs, 0.25rem);
+  }
+
+  .step[data-state="active"] .step-label {
+    color: var(--color-accent, #D94F04);
+  }
+
+  .step[data-state="completed"] .step-label {
+    color: var(--color-text, #2B2B2B);
+  }
+}

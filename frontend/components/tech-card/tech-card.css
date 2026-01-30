@@ -1,0 +1,159 @@
+/* ==========================================================================
+   tech-card — Single technology selection card
+   Neo-brutalist: solid borders, no radius, offset shadows, bold type
+   ========================================================================== */
+
+:host {
+  display: block;
+  contain: content;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md, 1rem);
+  padding: var(--space-lg, 1.5rem);
+  background-color: var(--color-surface, #FFFFFF);
+  border: 2px solid var(--color-border, #2B2B2B);
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+.card:hover {
+  box-shadow: 4px 4px 0 var(--color-border, #2B2B2B);
+  transform: translate(-2px, -2px);
+}
+
+.card:active {
+  box-shadow: 0 0 0 var(--color-border, #2B2B2B);
+  transform: translate(2px, 2px);
+}
+
+/* --------------------------------------------------------------------------
+   Selected state
+   -------------------------------------------------------------------------- */
+
+:host([selected]) .card {
+  border-color: var(--color-accent, #D94F04);
+  box-shadow: 4px 4px 0 var(--color-accent, #D94F04);
+}
+
+:host([selected]) .card:hover {
+  box-shadow: 6px 6px 0 var(--color-accent, #D94F04);
+}
+
+:host([selected]) .card-check {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Disabled / incompatible state
+   -------------------------------------------------------------------------- */
+
+:host([disabled]) .card {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+:host([disabled]) .card:hover {
+  box-shadow: none;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Icon area
+   -------------------------------------------------------------------------- */
+
+.card-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid var(--color-border, #2B2B2B);
+  background-color: var(--color-bg, #FAF6F1);
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Body: name, description, categories
+   -------------------------------------------------------------------------- */
+
+.card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-name {
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-xs, 0.25rem) 0;
+  color: var(--color-text, #2B2B2B);
+}
+
+.card-description {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--color-muted, #6B6B6B);
+  line-height: 1.5;
+  margin: 0 0 var(--space-sm, 0.5rem) 0;
+}
+
+.card-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.25rem);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid var(--color-border, #2B2B2B);
+  background-color: var(--color-bg, #FAF6F1);
+  color: var(--color-text, #2B2B2B);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   Checkmark indicator
+   -------------------------------------------------------------------------- */
+
+.card-check {
+  position: absolute;
+  top: var(--space-sm, 0.5rem);
+  right: var(--space-sm, 0.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 2px solid var(--color-accent, #D94F04);
+  background-color: var(--color-accent, #D94F04);
+  color: var(--color-surface, #FFFFFF);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Focus-visible for keyboard accessibility
+   -------------------------------------------------------------------------- */
+
+:host(:focus-visible) .card {
+  outline: 2px solid var(--color-accent, #D94F04);
+  outline-offset: 2px;
+}

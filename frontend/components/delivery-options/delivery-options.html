@@ -1,0 +1,62 @@
+<div class="delivery-options">
+  <div class="delivery-header">
+    <h2 class="delivery-title">Export Your Files</h2>
+    <p class="delivery-description">Choose your output filename and delivery method, then download or commit to GitHub.</p>
+  </div>
+
+  <section class="filename-section">
+    <filename-selector></filename-selector>
+  </section>
+
+  <section class="mode-section">
+    <h3 class="mode-heading">Delivery Mode</h3>
+    <div class="mode-cards" data-mode-cards>
+      <label class="mode-card" data-mode="download">
+        <input class="mode-radio" type="radio" name="delivery-mode" value="download" checked />
+        <div class="mode-card-inner">
+          <span class="mode-icon" aria-hidden="true">ZIP</span>
+          <span class="mode-label">Download as Zip</span>
+          <span class="mode-description">Download a zip archive with the generated markdown and all template files.</span>
+        </div>
+      </label>
+      <label class="mode-card" data-mode="inline">
+        <input class="mode-radio" type="radio" name="delivery-mode" value="inline" />
+        <div class="mode-card-inner">
+          <span class="mode-icon" aria-hidden="true">MD</span>
+          <span class="mode-label">Inline Instructions</span>
+          <span class="mode-description">Embed setup files as code blocks inside the markdown file itself.</span>
+        </div>
+      </label>
+      <label class="mode-card" data-mode="copypaste">
+        <input class="mode-radio" type="radio" name="delivery-mode" value="copypaste" />
+        <div class="mode-card-inner">
+          <span class="mode-icon" aria-hidden="true">AI</span>
+          <span class="mode-label">Copy-Paste Prompt</span>
+          <span class="mode-description">Generate a prompt you can paste into an AI agent to create all files.</span>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <section class="summary-section" data-summary-section>
+    <h3 class="summary-heading">What's Included</h3>
+    <div class="summary-box" data-summary-box>
+      <p class="summary-empty" data-summary-empty>No technologies selected.</p>
+      <ul class="summary-list" data-summary-list hidden></ul>
+    </div>
+  </section>
+
+  <section class="actions-section">
+    <div class="actions-row">
+      <button class="action-btn action-primary" type="button" data-primary-action>
+        <span class="action-btn-label" data-primary-label>Download</span>
+      </button>
+      <button class="action-btn action-github" type="button" data-github-action>
+        <span class="action-btn-label">Commit to GitHub</span>
+      </button>
+    </div>
+    <div class="actions-row actions-secondary">
+      <button class="action-btn action-back" type="button" data-back-action>Back to Preview</button>
+    </div>
+  </section>
+</div>
