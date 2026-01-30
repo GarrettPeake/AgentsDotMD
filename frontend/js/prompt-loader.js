@@ -1,29 +1,9 @@
 /**
  * Prompt loader module.
- * Fetches manifest and fragment files from the public GitHub prompt repository.
+ * Loads manifest and fragment files from the local prompts directory,
+ * which is served as static assets alongside the rest of the frontend.
  */
 import { store } from './store.js';
-
-let repoOwner = 'GarrettPeake';
-let repoName = 'AgentsDotMD-prompts';
-
-/**
- * Configure the prompt repository source.
- * @param {string} owner - GitHub repository owner.
- * @param {string} repo - GitHub repository name.
- */
-export function setPromptRepoUrl(owner, repo) {
-  repoOwner = owner;
-  repoName = repo;
-}
-
-/**
- * Returns the base raw content URL for the configured prompt repository.
- * @returns {string}
- */
-function getBaseUrl() {
-  return `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main`;
-}
 
 /**
  * Parses YAML frontmatter from a markdown string.
@@ -107,12 +87,12 @@ function parseScalarValue(raw) {
 }
 
 /**
- * Fetches and parses the prompt repository manifest.
+ * Fetches and parses the prompt manifest from the local static assets.
  * Stores technologies in the store.
  * @returns {Promise<Object>} The parsed manifest.
  */
 export async function loadManifest() {
-  const url = `${getBaseUrl()}/prompts/manifest.json`;
+  const url = '/prompts/manifest.json';
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -138,7 +118,7 @@ export async function loadFragments(technologyId) {
     throw new Error(`Technology not found: ${technologyId}`);
   }
 
-  const fragmentsDir = `${getBaseUrl()}/prompts/technologies/${technologyId}/fragments`;
+  const fragmentsDir = `/prompts/technologies/${technologyId}/fragments`;
   const fragmentPaths = tech.fragments || [];
   const results = await Promise.all(
     fragmentPaths.map(async (fragmentPath) => {
@@ -183,7 +163,7 @@ export async function loadCombinationFragments(techIds) {
       continue;
     }
 
-    const comboDir = `${getBaseUrl()}/prompts/combinations/${combo.id}/fragments`;
+    const comboDir = `/prompts/combinations/${combo.id}/fragments`;
     const fragmentPaths = combo.fragments || [];
 
     const fragments = await Promise.all(
@@ -227,7 +207,7 @@ export async function loadTemplates(technologyId) {
 
   const results = await Promise.all(
     tech.templates.map(async (template) => {
-      const url = `${getBaseUrl()}/prompts/${template.sourcePath}`;
+      const url = `/prompts/${template.sourcePath}`;
       const response = await fetch(url);
 
       if (!response.ok) {

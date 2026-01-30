@@ -1,0 +1,50 @@
+{
+  "name": "React",
+  "description": "A JavaScript library for building user interfaces",
+  "icon": "react.svg",
+  "categories": ["frontend", "javascript"],
+  "options": [
+    {
+      "id": "language",
+      "label": "Language",
+      "type": "single-select",
+      "choices": [
+        { "id": "typescript", "label": "TypeScript", "default": true },
+        { "id": "javascript", "label": "JavaScript" }
+      ]
+    },
+    {
+      "id": "state-management",
+      "label": "State Management",
+      "type": "single-select",
+      "choices": [
+        { "id": "hooks", "label": "React Hooks", "default": true },
+        { "id": "zustand", "label": "Zustand" },
+        { "id": "redux", "label": "Redux Toolkit" }
+      ]
+    },
+    {
+      "id": "use-testing",
+      "label": "Include Testing Conventions",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my-react-app",
+      "placeholder": "e.g., my-react-app"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    "node_modules/",
+    "dist/",
+    "build/",
+    ".env",
+    ".env.local"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": ["cloudflare-workers"]
+}

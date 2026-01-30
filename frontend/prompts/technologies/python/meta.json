@@ -1,0 +1,44 @@
+{
+  "name": "Python",
+  "description": "A versatile programming language for web, data science, and automation",
+  "icon": "python.svg",
+  "categories": ["backend", "data-science", "scripting"],
+  "options": [
+    {
+      "id": "framework",
+      "label": "Web Framework",
+      "type": "single-select",
+      "choices": [
+        { "id": "none", "label": "None", "default": true },
+        { "id": "fastapi", "label": "FastAPI" },
+        { "id": "django", "label": "Django" },
+        { "id": "flask", "label": "Flask" }
+      ]
+    },
+    {
+      "id": "use-typing",
+      "label": "Strict Type Hints",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my_python_project",
+      "placeholder": "e.g., my_python_project"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    "__pycache__/",
+    "*.pyc",
+    ".venv/",
+    "venv/",
+    ".env",
+    "dist/",
+    "*.egg-info/"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

@@ -1,6 +1,6 @@
 name = "agentsdotmd"
 main = "src/index.js"
-compatibility_date = "2025-01-01"
+compatibility_date = "2025-12-01"
 
 [assets]
 directory = "./frontend"
@@ -11,4 +11,4 @@ run_worker_first = ["/api/*"]
 [vars]
 GITHUB_CLIENT_ID = ""
 PROMPT_REPO_OWNER = "GarrettPeake"
-PROMPT_REPO_NAME = "AgentsDotMD-prompts"
+PROMPT_REPO_NAME = "AgentsDotMD"

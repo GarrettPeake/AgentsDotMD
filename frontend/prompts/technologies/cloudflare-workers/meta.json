@@ -1,0 +1,45 @@
+{
+  "name": "Cloudflare Workers",
+  "description": "Serverless JavaScript/TypeScript runtime at the edge",
+  "icon": "cloudflare-workers.svg",
+  "categories": ["backend", "serverless", "javascript"],
+  "options": [
+    {
+      "id": "language",
+      "label": "Language",
+      "type": "single-select",
+      "choices": [
+        { "id": "typescript", "label": "TypeScript", "default": true },
+        { "id": "javascript", "label": "JavaScript" }
+      ]
+    },
+    {
+      "id": "use-durable-objects",
+      "label": "Use Durable Objects",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my-worker",
+      "placeholder": "e.g., my-worker"
+    }
+  ],
+  "templates": [
+    {
+      "sourcePath": "templates/cloudflare-workers/wrangler.toml.tmpl",
+      "outputPath": "wrangler.toml",
+      "variables": ["project-name"]
+    }
+  ],
+  "gitignore": [
+    "node_modules/",
+    ".wrangler/",
+    ".dev.vars",
+    "dist/"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": ["react"]
+}
