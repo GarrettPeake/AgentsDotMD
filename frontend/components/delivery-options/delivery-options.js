@@ -189,14 +189,14 @@ export class DeliveryOptions extends HTMLElement {
    */
   _onGithubAction() {
     generate();
-    eventBus.emit(NAVIGATE, '#/github-commit');
+    eventBus.emit(NAVIGATE, '/github-commit');
   }
 
   /**
    * Navigates back to the preview step.
    */
   _onBackAction() {
-    eventBus.emit(NAVIGATE, '#/preview');
+    eventBus.emit(NAVIGATE, '/preview');
   }
 
   /**
