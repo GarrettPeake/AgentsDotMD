@@ -1,0 +1,324 @@
+/* ==========================================================================
+   Utility Classes — AgentsDotMD
+   Minimal utility classes for common layout and styling needs.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Accessibility
+   -------------------------------------------------------------------------- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.container {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-xs {
+  gap: var(--space-xs);
+}
+
+.gap-sm {
+  gap: var(--space-sm);
+}
+
+.gap-md {
+  gap: var(--space-md);
+}
+
+.gap-lg {
+  gap: var(--space-lg);
+}
+
+.gap-xl {
+  gap: var(--space-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.text-xs {
+  font-size: var(--text-xs);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+}
+
+.text-xl {
+  font-size: var(--text-xl);
+}
+
+.text-2xl {
+  font-size: var(--text-2xl);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.font-black {
+  font-weight: var(--font-weight-black);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   Spacing — Margin Top
+   -------------------------------------------------------------------------- */
+
+.mt-xs {
+  margin-top: var(--space-xs);
+}
+
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+
+.mt-md {
+  margin-top: var(--space-md);
+}
+
+.mt-lg {
+  margin-top: var(--space-lg);
+}
+
+.mt-xl {
+  margin-top: var(--space-xl);
+}
+
+.mt-2xl {
+  margin-top: var(--space-2xl);
+}
+
+/* --------------------------------------------------------------------------
+   Spacing — Margin Bottom
+   -------------------------------------------------------------------------- */
+
+.mb-xs {
+  margin-bottom: var(--space-xs);
+}
+
+.mb-sm {
+  margin-bottom: var(--space-sm);
+}
+
+.mb-md {
+  margin-bottom: var(--space-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--space-lg);
+}
+
+.mb-xl {
+  margin-bottom: var(--space-xl);
+}
+
+.mb-2xl {
+  margin-bottom: var(--space-2xl);
+}
+
+/* --------------------------------------------------------------------------
+   Spacing — Padding
+   -------------------------------------------------------------------------- */
+
+.p-xs {
+  padding: var(--space-xs);
+}
+
+.p-sm {
+  padding: var(--space-sm);
+}
+
+.p-md {
+  padding: var(--space-md);
+}
+
+.p-lg {
+  padding: var(--space-lg);
+}
+
+.p-xl {
+  padding: var(--space-xl);
+}
+
+.p-2xl {
+  padding: var(--space-2xl);
+}
+
+/* --------------------------------------------------------------------------
+   Width
+   -------------------------------------------------------------------------- */
+
+.w-full {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Borders
+   -------------------------------------------------------------------------- */
+
+.border {
+  border: 2px solid var(--color-border);
+}
+
+.border-bottom {
+  border-bottom: 2px solid var(--color-border);
+}
+
+/* --------------------------------------------------------------------------
+   Backgrounds
+   -------------------------------------------------------------------------- */
+
+.bg-surface {
+  background-color: var(--color-surface);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+.bg-bg {
+  background-color: var(--color-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Shadows
+   -------------------------------------------------------------------------- */
+
+.shadow-brutalist {
+  box-shadow: 4px 4px 0 var(--color-text);
+}
+
+/* --------------------------------------------------------------------------
+   Button Variants
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-base);
+  font-family: inherit;
+  border: 2px solid var(--color-border);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--color-text);
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+  text-decoration: none;
+  line-height: var(--line-height-tight);
+}
+
+.btn:hover {
+  box-shadow: 2px 2px 0 var(--color-text);
+  transform: translate(2px, 2px);
+}
+
+.btn:active {
+  box-shadow: 0 0 0 var(--color-text);
+  transform: translate(4px, 4px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: 4px 4px 0 var(--color-text);
+  transform: none;
+}
+
+.btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+}
+
+.btn-accent:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-text);
+  color: var(--color-surface);
+}

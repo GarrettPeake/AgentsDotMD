@@ -1,0 +1,129 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+
+.app-header {
+  border-bottom: 3px solid var(--color-border);
+  background-color: var(--color-surface);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.header-content {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.header-title-group {
+  flex-shrink: 0;
+}
+
+.site-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-accent);
+  letter-spacing: -0.03em;
+  line-height: var(--line-height-tight);
+  margin: 0;
+}
+
+.site-tagline {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  margin: var(--space-xs) 0 0 0;
+}
+
+.header-wizard {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   Main
+   -------------------------------------------------------------------------- */
+
+.app-main {
+  flex: 1;
+  padding: var(--space-2xl) var(--space-xl);
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.app-footer {
+  border-top: 3px solid var(--color-border);
+  padding: var(--space-lg) var(--space-xl);
+  background-color: var(--color-surface);
+}
+
+.footer-text {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  text-align: center;
+  margin: 0;
+}
+
+.footer-text a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-text a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: var(--space-md);
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-wizard {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .site-title {
+    font-size: var(--text-2xl);
+  }
+
+  .app-main {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .app-footer {
+    padding: var(--space-md);
+  }
+}

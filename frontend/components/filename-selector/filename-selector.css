@@ -1,0 +1,93 @@
+/* ==========================================================================
+   filename-selector — Dropdown for output filename selection
+   Neo-brutalist: solid borders, no radius, bold type
+   ========================================================================== */
+
+:host {
+  display: block;
+}
+
+.filename-selector {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Label
+   -------------------------------------------------------------------------- */
+
+.filename-label {
+  display: block;
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text, #2B2B2B);
+  margin-bottom: var(--space-xs, 0.25rem);
+}
+
+/* --------------------------------------------------------------------------
+   Select
+   -------------------------------------------------------------------------- */
+
+.filename-select {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
+  font-size: var(--text-base, 1rem);
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  color: var(--color-text, #2B2B2B);
+  background-color: var(--color-surface, #FFFFFF);
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232B2B2B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-md, 1rem) center;
+  padding-right: var(--space-2xl, 3rem);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.filename-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #D94F04);
+  box-shadow: 0 0 0 1px var(--color-accent, #D94F04);
+}
+
+/* --------------------------------------------------------------------------
+   Custom Input
+   -------------------------------------------------------------------------- */
+
+.custom-input-wrapper {
+  margin-top: var(--space-xs, 0.25rem);
+}
+
+.custom-input-wrapper[hidden] {
+  display: none;
+}
+
+.custom-input {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
+  font-size: var(--text-base, 1rem);
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  color: var(--color-text, #2B2B2B);
+  background-color: var(--color-surface, #FFFFFF);
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  transition: border-color 0.15s ease;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #D94F04);
+  box-shadow: 0 0 0 1px var(--color-accent, #D94F04);
+}
+
+.custom-input::placeholder {
+  color: var(--color-muted, #6B6B6B);
+  font-weight: 400;
+}

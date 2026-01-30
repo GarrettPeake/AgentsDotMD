@@ -1,0 +1,187 @@
+/* ==========================================================================
+   template-preview — Template/boilerplate file listing with collapsible content
+   Neo-brutalist: solid borders, no radius, offset shadows, bold type
+   ========================================================================== */
+
+:host {
+  display: block;
+}
+
+.template-preview {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+
+.template-header {
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.template-title {
+  font-size: var(--text-2xl, 1.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-xs, 0.25rem) 0;
+  color: var(--color-text, #2B2B2B);
+}
+
+.template-description {
+  font-size: var(--text-base, 1rem);
+  color: var(--color-muted, #6B6B6B);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Template list
+   -------------------------------------------------------------------------- */
+
+.template-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Empty state
+   -------------------------------------------------------------------------- */
+
+.template-empty {
+  text-align: center;
+  padding: var(--space-2xl, 3rem) var(--space-md, 1rem);
+}
+
+.template-empty[hidden] {
+  display: none;
+}
+
+.empty-text {
+  font-size: var(--text-lg, 1.125rem);
+  color: var(--color-muted, #6B6B6B);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   File entry
+   -------------------------------------------------------------------------- */
+
+.file-entry {
+  border: 2px solid var(--color-border, #2B2B2B);
+  margin-bottom: -2px;
+}
+
+.file-entry:last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   File header (clickable toggle)
+   -------------------------------------------------------------------------- */
+
+.file-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
+  background-color: var(--color-bg, #FAF6F1);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+
+.file-header:hover {
+  background-color: var(--color-surface, #FFFFFF);
+}
+
+.file-entry.expanded .file-header {
+  border-bottom: 2px solid var(--color-border, #2B2B2B);
+  box-shadow: inset 4px 0 0 var(--color-accent, #D94F04);
+}
+
+.file-path {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  color: var(--color-text, #2B2B2B);
+  letter-spacing: 0.02em;
+}
+
+.toggle-indicator {
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 900;
+  color: var(--color-text, #2B2B2B);
+  width: 1.5rem;
+  text-align: center;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   File content (collapsible)
+   -------------------------------------------------------------------------- */
+
+.file-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease;
+}
+
+.file-content[hidden] {
+  display: none;
+}
+
+.file-entry.expanded .file-content {
+  max-height: 60rem;
+}
+
+.file-pre {
+  margin: 0;
+  padding: var(--space-md, 1rem);
+  background-color: var(--color-surface, #FFFFFF);
+  border: none;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.file-code {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-sm, 0.875rem);
+  line-height: 1.6;
+  color: var(--color-text, #2B2B2B);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Variable placeholder highlighting
+   -------------------------------------------------------------------------- */
+
+.var-placeholder {
+  background-color: var(--color-accent, #D94F04);
+  color: var(--color-surface, #FFFFFF);
+  padding: 1px 4px;
+  font-weight: 700;
+  border: 1px solid var(--color-border, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .file-header {
+    padding: var(--space-sm, 0.5rem);
+  }
+
+  .file-pre {
+    padding: var(--space-sm, 0.5rem);
+  }
+
+  .file-path {
+    font-size: var(--text-xs, 0.75rem);
+  }
+}

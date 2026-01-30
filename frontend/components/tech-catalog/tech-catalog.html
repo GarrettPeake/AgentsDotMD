@@ -1,0 +1,41 @@
+<div class="catalog">
+  <header class="catalog-header">
+    <h2 class="catalog-title">Select Technologies</h2>
+    <p class="catalog-description">Choose the technologies in your stack. We will generate a tailored configuration file with best practices and conventions for each.</p>
+  </header>
+
+  <div class="catalog-controls">
+    <div class="search-wrapper">
+      <input
+        type="text"
+        data-search-input
+        placeholder="Search technologies..."
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search technologies"
+      />
+    </div>
+
+    <nav class="category-filters" data-category-filters aria-label="Filter by category">
+      <button type="button" class="filter-btn active" data-category="all">All</button>
+      <button type="button" class="filter-btn" data-category="frontend">Frontend</button>
+      <button type="button" class="filter-btn" data-category="backend">Backend</button>
+      <button type="button" class="filter-btn" data-category="mobile">Mobile</button>
+      <button type="button" class="filter-btn" data-category="database">Database</button>
+      <button type="button" class="filter-btn" data-category="devops">DevOps</button>
+      <button type="button" class="filter-btn" data-category="cross-platform">Cross-Platform</button>
+      <button type="button" class="filter-btn" data-category="testing">Testing</button>
+    </nav>
+  </div>
+
+  <div class="catalog-grid" data-catalog-grid role="listbox" aria-label="Technologies"></div>
+
+  <div class="catalog-empty" data-empty-state hidden>
+    <p class="empty-text">No technologies match your search.</p>
+  </div>
+
+  <div class="catalog-footer">
+    <div class="selection-count" data-selection-count></div>
+    <button type="button" class="continue-btn" data-continue-btn disabled>Continue</button>
+  </div>
+</div>

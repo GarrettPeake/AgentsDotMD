@@ -1,0 +1,12 @@
+name = "agentsdotmd"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./frontend"
+binding = "ASSETS"
+
+[vars]
+GITHUB_CLIENT_ID = ""
+PROMPT_REPO_OWNER = "GarrettPeake"
+PROMPT_REPO_NAME = "AgentsDotMD-prompts"

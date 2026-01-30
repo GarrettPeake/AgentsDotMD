@@ -1,0 +1,486 @@
+/* ==========================================================================
+   contribution-modal — Modal for suggesting changes to prompts
+   Neo-brutalist: solid borders, no radius, offset shadows, bold type
+   ========================================================================== */
+
+:host {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Modal overlay
+   -------------------------------------------------------------------------- */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-md, 1rem);
+  box-sizing: border-box;
+  animation: overlay-fade-in 0.2s ease;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+@keyframes overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Modal box
+   -------------------------------------------------------------------------- */
+
+.modal-box {
+  width: 100%;
+  max-width: 48rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: var(--color-surface, #FFFFFF);
+  border: 3px solid var(--color-border, #2B2B2B);
+  box-shadow: 8px 8px 0 var(--color-border, #2B2B2B);
+  animation: modal-slide-in 0.25s ease;
+}
+
+@keyframes modal-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Modal header
+   -------------------------------------------------------------------------- */
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg, 1.5rem);
+  border-bottom: 3px solid var(--color-border, #2B2B2B);
+}
+
+.modal-title {
+  font-size: var(--text-2xl, 1.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--color-text, #2B2B2B);
+  margin: 0;
+}
+
+.modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: var(--text-2xl, 1.5rem);
+  font-weight: 900;
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-text, #2B2B2B);
+  cursor: pointer;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  background-color: var(--color-bg, #FAF6F1);
+  box-shadow: 2px 2px 0 var(--color-border, #2B2B2B);
+}
+
+.modal-close:focus-visible {
+  outline: 2px solid var(--color-accent, #D94F04);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Modal body
+   -------------------------------------------------------------------------- */
+
+.modal-body {
+  padding: var(--space-lg, 1.5rem);
+}
+
+/* --------------------------------------------------------------------------
+   Fragment info
+   -------------------------------------------------------------------------- */
+
+.fragment-info {
+  margin-bottom: var(--space-lg, 1.5rem);
+  padding: var(--space-md, 1rem);
+  border: 2px solid var(--color-border, #2B2B2B);
+  background-color: var(--color-bg, #FAF6F1);
+}
+
+.fragment-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+  margin-bottom: var(--space-xs, 0.25rem);
+}
+
+.fragment-meta:last-child {
+  margin-bottom: 0;
+}
+
+.fragment-label {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted, #6B6B6B);
+}
+
+.fragment-id,
+.fragment-technology {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  color: var(--color-text, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Section heading
+   -------------------------------------------------------------------------- */
+
+.section-heading {
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-md, 1rem) 0;
+  color: var(--color-text, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Diff view
+   -------------------------------------------------------------------------- */
+
+.diff-section {
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.diff-view {
+  border: 2px solid var(--color-border, #2B2B2B);
+  background-color: var(--color-surface, #FFFFFF);
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-sm, 0.875rem);
+  line-height: 1.6;
+  overflow-x: auto;
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+.diff-line {
+  padding: 0.125rem var(--space-md, 1rem);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.diff-line-added {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.diff-line-removed {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.diff-line-context {
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-muted, #6B6B6B);
+}
+
+.diff-line-header {
+  background-color: var(--color-bg, #FAF6F1);
+  color: var(--color-accent, #D94F04);
+  font-weight: 900;
+  border-bottom: 2px solid var(--color-border, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   New fragment section
+   -------------------------------------------------------------------------- */
+
+.new-fragment-section {
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.new-fragment-section[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Form groups
+   -------------------------------------------------------------------------- */
+
+.form-group {
+  margin-bottom: var(--space-md, 1rem);
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text, #2B2B2B);
+  margin-bottom: var(--space-xs, 0.25rem);
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
+  font-size: var(--text-base, 1rem);
+  font-weight: 700;
+  font-family: inherit;
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-text, #2B2B2B);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--color-accent, #D94F04);
+  box-shadow: 3px 3px 0 var(--color-accent, #D94F04);
+  outline: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-muted, #6B6B6B);
+  font-weight: 400;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+/* --------------------------------------------------------------------------
+   Rationale section
+   -------------------------------------------------------------------------- */
+
+.rationale-section {
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.rationale-hint {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--color-muted, #6B6B6B);
+  margin: 0 0 var(--space-sm, 0.5rem) 0;
+  line-height: 1.5;
+}
+
+.rationale-textarea {
+  min-height: 5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Submit section
+   -------------------------------------------------------------------------- */
+
+.submit-section {
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.submit-options {
+  display: flex;
+  gap: var(--space-md, 1rem);
+  flex-wrap: wrap;
+}
+
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+  padding: var(--space-md, 1rem) var(--space-xl, 2rem);
+  font-size: var(--text-base, 1rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.submit-btn:hover {
+  box-shadow: 2px 2px 0 var(--color-text, #2B2B2B);
+  transform: translate(2px, 2px);
+}
+
+.submit-btn:active {
+  box-shadow: 0 0 0 var(--color-text, #2B2B2B);
+  transform: translate(4px, 4px);
+}
+
+.submit-btn:focus-visible {
+  outline: 2px solid var(--color-accent, #D94F04);
+  outline-offset: 2px;
+}
+
+.submit-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.submit-authenticated {
+  background-color: var(--color-accent, #D94F04);
+  color: var(--color-surface, #FFFFFF);
+  box-shadow: 4px 4px 0 var(--color-text, #2B2B2B);
+  flex: 1;
+  min-width: 12rem;
+  justify-content: center;
+}
+
+.submit-authenticated:hover {
+  background-color: var(--color-accent-hover, #B84303);
+  box-shadow: 2px 2px 0 var(--color-text, #2B2B2B);
+}
+
+.submit-authenticated:active {
+  box-shadow: 0 0 0 var(--color-text, #2B2B2B);
+}
+
+.submit-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 900;
+  font-family: var(--font-mono, monospace);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.submit-anonymous {
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-text, #2B2B2B);
+  box-shadow: 4px 4px 0 var(--color-text, #2B2B2B);
+  flex: 1;
+  min-width: 12rem;
+  justify-content: center;
+}
+
+.submit-anonymous:hover {
+  background-color: var(--color-bg, #FAF6F1);
+  box-shadow: 2px 2px 0 var(--color-text, #2B2B2B);
+}
+
+.submit-anonymous:active {
+  box-shadow: 0 0 0 var(--color-text, #2B2B2B);
+}
+
+/* --------------------------------------------------------------------------
+   Status section
+   -------------------------------------------------------------------------- */
+
+.status-section {
+  margin-bottom: 0;
+}
+
+.status-section[hidden] {
+  display: none;
+}
+
+.status-box {
+  border: 2px solid var(--color-border, #2B2B2B);
+  padding: var(--space-md, 1rem) var(--space-lg, 1.5rem);
+  background-color: var(--color-surface, #FFFFFF);
+  font-family: var(--font-mono, monospace);
+}
+
+.status-message {
+  font-size: var(--text-base, 1rem);
+  font-weight: 700;
+  color: var(--color-text, #2B2B2B);
+  margin: 0;
+}
+
+.status-link {
+  display: inline-block;
+  margin-top: var(--space-sm, 0.5rem);
+  font-size: var(--text-base, 1rem);
+  font-weight: 900;
+  color: var(--color-accent, #D94F04);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.status-link[hidden] {
+  display: none;
+}
+
+.status-link:hover {
+  color: var(--color-accent-hover, #B84303);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .modal-box {
+    max-height: 95vh;
+    box-shadow: 4px 4px 0 var(--color-border, #2B2B2B);
+  }
+
+  .modal-header {
+    padding: var(--space-md, 1rem);
+  }
+
+  .modal-body {
+    padding: var(--space-md, 1rem);
+  }
+
+  .modal-title {
+    font-size: var(--text-xl, 1.25rem);
+  }
+
+  .submit-options {
+    flex-direction: column;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+
+  .diff-view {
+    max-height: 14rem;
+  }
+}
