@@ -6,8 +6,10 @@ import Router from './router.js';
 import { store } from './store.js';
 import { eventBus, NAVIGATE } from './event-bus.js';
 
+// Import app-root eagerly so it is defined before we wait on it
+import '../components/app-root/app-root.js';
+
 const COMPONENT_MODULES = [
-  '../components/app-root/app-root.js',
   '../components/tech-catalog/tech-catalog.js',
   '../components/tech-card/tech-card.js',
   '../components/option-panel/option-panel.js',
@@ -51,7 +53,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const appRoot = document.createElement('app-root');
   appContainer.appendChild(appRoot);
 
-  await customElements.whenDefined('app-root');
+  // Wait for app-root's shadow DOM to be fully populated (not just defined)
+  await appRoot.ready;
 
   const outlet = appRoot.shadowRoot.querySelector('[data-router-outlet]');
   if (!outlet) {
@@ -59,8 +62,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  await registerComponents();
+
   const router = createRouter(outlet);
   router.start();
-
-  await registerComponents();
 });
