@@ -88,6 +88,10 @@ The project has completed its **initial implementation**. The full application i
 
 ## Development Rules
 
+### Keep CLAUDE.md Up to Date
+
+**This file (`CLAUDE.md`) is the single source of truth for project context.** Whenever you make a change to the project — adding components, modifying the prompt library, changing the build process, adding new scripts, altering the project structure, or introducing new conventions — you MUST update `CLAUDE.md` to reflect those changes. Stale documentation misleads future contributors and agents. Treat updating this file as a mandatory part of every contribution, not an optional follow-up.
+
 ### Strict Language Separation for Web Components
 
 Every web component consists of exactly three files:
@@ -202,6 +206,82 @@ AgentsDotMD/
         └── deploy.yml           # GitHub Actions: wrangler deploy on push to main
 ```
 
+## Screenshot Automation
+
+The project includes a Playwright-based screenshot tool in `automation/` for visual testing and auditing.
+
+**Prerequisites before running screenshots:**
+1. Build the prompt manifest: `node scripts/build-manifest.js`
+2. Start the dev server: `npx wrangler dev` (run in background, wait for "Ready" output)
+3. Then run the screenshotter against the running server
+
+```bash
+# Setup (one-time)
+cd automation && npm install && npm run install-browsers && cd ..
+
+# Prerequisites (must be done before screenshots)
+node scripts/build-manifest.js
+npx wrangler dev &  # start dev server in background, wait for it to be ready
+
+# Run screenshots (dev server must be running)
+cd automation && npm run screenshot && cd ..
+
+# Or with a custom URL
+cd automation && node screenshotter.js http://localhost:8787 && cd ..
+```
+
+Screenshots are saved to `automation/screenshots/` with descriptive filenames. Both desktop (1280x800) and mobile (390x844) viewports are captured. The `screenshots/` directory is gitignored.
+
+**Use this tool to visually verify changes** — run the screenshotter after making UI changes, then read the screenshot images to confirm the changes look correct.
+
+## Prompt Library & Manifest
+
+The prompt library lives in `frontend/prompts/` and is the core data source for the application. The manifest file `frontend/prompts/manifest.json` is **generated** from the directory structure by the build script — never edit it by hand.
+
+### Directory Structure
+
+```
+frontend/prompts/
+├── manifest.json                          # GENERATED — do not edit manually
+├── technologies/{tech-id}/
+│   ├── meta.json                          # Name, description, categories, options, templates, gitignore
+│   └── fragments/
+│       ├── general.md                     # Core conventions (always included)
+│       └── {feature}.md                   # Conditional fragments (included based on options)
+├── combinations/{tech-a}+{tech-b}/
+│   ├── meta.json                          # Which technologies, description
+│   └── fragments/
+│       └── integration.md                 # Integration-specific guidance
+└── templates/{tech-id}/
+    └── {filename}.tmpl                    # Template files with {{variable}} interpolation
+```
+
+### Building the Manifest
+
+```bash
+node scripts/build-manifest.js
+```
+
+This reads every `meta.json` and fragment file, extracts metadata (including YAML frontmatter from `.md` files), and writes `frontend/prompts/manifest.json`.
+
+### IMPORTANT: Keep the Manifest Up to Date
+
+**Every time you add, remove, or modify files in `frontend/prompts/`, you MUST re-run `node scripts/build-manifest.js` to regenerate the manifest.** The application loads `manifest.json` at runtime to discover technologies, options, and fragments. If the manifest is stale, the UI will not reflect your changes.
+
+### Adding a New Technology
+
+1. Create `frontend/prompts/technologies/{tech-id}/meta.json` with name, description, categories, options, etc.
+2. Create `frontend/prompts/technologies/{tech-id}/fragments/general.md` with core conventions (use YAML frontmatter for id, category, sortOrder).
+3. Add any conditional fragments (e.g., `testing.md`, `typing.md`) gated by option values.
+4. Optionally add template files in `frontend/prompts/templates/{tech-id}/`.
+5. Run `node scripts/build-manifest.js` to regenerate the manifest.
+
+### Adding a Combination
+
+1. Create `frontend/prompts/combinations/{tech-a}+{tech-b}/meta.json` listing the technology IDs.
+2. Add fragment files describing integration conventions.
+3. Run `node scripts/build-manifest.js` to regenerate the manifest.
+
 ## Key Commands
 
 ```bash
@@ -213,6 +293,9 @@ npx wrangler dev
 
 # Deploy to Cloudflare
 npx wrangler deploy
+
+# Rebuild prompt manifest after changing prompts
+node scripts/build-manifest.js
 
 # Set secrets
 npx wrangler secret put GITHUB_CLIENT_SECRET
