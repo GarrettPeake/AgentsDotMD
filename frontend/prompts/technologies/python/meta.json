@@ -2,7 +2,7 @@
   "name": "Python",
   "description": "A versatile programming language for web, data science, and automation",
   "icon": "python.svg",
-  "categories": ["backend", "data-science", "scripting"],
+  "categories": ["language"],
   "options": [
     {
       "id": "framework",

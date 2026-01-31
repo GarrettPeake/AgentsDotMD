@@ -1,0 +1,31 @@
+<div class="workspace">
+  <div class="workspace-left">
+    <div class="left-section" data-tech-section>
+      <tech-catalog></tech-catalog>
+    </div>
+    <div class="left-section" data-options-section hidden>
+      <option-panel></option-panel>
+    </div>
+  </div>
+  <div class="workspace-right" data-right-panel>
+    <div class="preview-empty" data-preview-empty>
+      <p class="empty-title">Your AGENTS.md preview will appear here</p>
+      <p class="empty-hint"><span class="desktop-only">Select technologies from the left to get started</span><span class="mobile-only">Select technologies above to get started</span></p>
+    </div>
+    <div class="preview-active" data-preview-active hidden>
+      <div class="preview-toolbar">
+        <div class="toolbar-left">
+          <filename-selector></filename-selector>
+        </div>
+        <div class="toolbar-right">
+          <button class="toolbar-btn" data-copy-btn type="button" title="Copy to clipboard">Copy</button>
+          <button class="toolbar-btn toolbar-btn-primary" data-download-btn type="button" title="Download zip">Download</button>
+          <button class="toolbar-btn" data-github-btn type="button" title="Commit to GitHub">GitHub</button>
+        </div>
+      </div>
+      <div class="markdown-output" data-markdown-output>
+        <pre class="markdown-pre"><code class="markdown-code" data-markdown-code></code></pre>
+      </div>
+    </div>
+  </div>
+</div>

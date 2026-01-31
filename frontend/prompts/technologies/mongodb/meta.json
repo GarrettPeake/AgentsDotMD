@@ -1,0 +1,40 @@
+{
+  "name": "MongoDB",
+  "description": "A document-oriented NoSQL database designed for scalability, flexibility, and high-performance queries on JSON-like documents",
+  "icon": "mongodb.svg",
+  "categories": ["database"],
+  "options": [
+    {
+      "id": "driver",
+      "label": "Driver / ODM",
+      "type": "single-select",
+      "choices": [
+        { "id": "native", "label": "Native Driver", "default": true },
+        { "id": "mongoose", "label": "Mongoose" },
+        { "id": "prisma", "label": "Prisma" },
+        { "id": "pymongo", "label": "PyMongo" }
+      ]
+    },
+    {
+      "id": "use-atlas",
+      "label": "Use MongoDB Atlas",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "id": "database-name",
+      "label": "Database Name",
+      "type": "freeform",
+      "default": "my_database",
+      "placeholder": "e.g., my_database"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    ".env",
+    "mongod.lock",
+    "mongo-data/"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

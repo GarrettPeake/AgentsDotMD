@@ -2,7 +2,7 @@
   "name": "Rust",
   "description": "A systems programming language focused on safety, speed, and concurrency with zero-cost abstractions",
   "icon": "rust.svg",
-  "categories": ["backend", "cross-platform"],
+  "categories": ["language"],
   "options": [
     {
       "id": "async-runtime",

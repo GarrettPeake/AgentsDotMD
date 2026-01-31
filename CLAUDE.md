@@ -45,9 +45,10 @@ The project has completed its **initial implementation**. The full application i
 
 ### Frontend Web Components (each = .html + .css + .js, strict language separation):
 - `app-root` — Layout shell with header, router outlet, footer
-- `step-wizard` — 4-step progress indicator (Select → Configure → Preview → Export)
+- `workspace` — Single-page layout combining tech selection, options, and live assembled markdown preview with export toolbar
+- `step-wizard` — 4-step progress indicator (legacy, no longer displayed in header)
 - `toast-notification` — Popup notifications (success/error/info)
-- `tech-catalog` — Technology grid with search and category filtering
+- `tech-catalog` — Technology grid with search and category filtering (embedded in workspace)
 - `tech-card` — Individual technology card with toggle selection
 - `option-panel` — Dynamic options form (single-select, toggle, freeform) with dependency logic
 - `file-preview` — Markdown preview with inline editing and contribution suggestions
@@ -59,6 +60,15 @@ The project has completed its **initial implementation**. The full application i
 
 ### Vendor:
 - `frontend/vendor/jszip.min.js` — JSZip stub (replace with real library for production)
+
+### UI Architecture:
+The main interface is a **single-page workspace** layout (no multi-step wizard):
+- **Left panel**: Technology selection grid with search/filters, plus inline options configuration
+- **Right panel**: Live assembled markdown preview that updates in real-time as technologies are selected and options are configured
+- **Export toolbar**: Compact button row (Copy, Download, GitHub) at the top of the preview panel
+- The `workspace-view` component is the default route (`/`), embedding `tech-catalog`, `option-panel`, and `filename-selector` components
+- The step-wizard has been removed from the header; navigation is no longer needed for the core workflow
+- Routes `/configure`, `/preview`, `/export` still exist for backwards compatibility but the primary flow is single-page
 
 ### Next steps:
 - Replace JSZip stub with the real JSZip library
@@ -188,6 +198,7 @@ AgentsDotMD/
 │   │   └── diff.js              # Unified diff computation
 │   ├── components/              # Web components (each = .html + .css + .js)
 │   │   ├── app-root/
+│   │   ├── workspace/
 │   │   ├── tech-catalog/
 │   │   ├── tech-card/
 │   │   ├── option-panel/

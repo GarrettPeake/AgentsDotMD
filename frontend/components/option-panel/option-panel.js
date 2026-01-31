@@ -5,7 +5,7 @@
  * dependency visibility, and triggers fragment loading on change.
  */
 import { store } from '../../js/store.js';
-import { eventBus, OPTIONS_CHANGED, NAVIGATE, TOAST_SHOW } from '../../js/event-bus.js';
+import { eventBus, OPTIONS_CHANGED, TOAST_SHOW } from '../../js/event-bus.js';
 import { loadFragments, loadCombinationFragments, loadTemplates } from '../../js/prompt-loader.js';
 
 export class OptionPanel extends HTMLElement {
@@ -41,20 +41,6 @@ export class OptionPanel extends HTMLElement {
   }
 
   _bind() {
-    const backBtn = this.shadowRoot.querySelector('[data-back-btn]');
-    if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        eventBus.emit(NAVIGATE, '/');
-      });
-    }
-
-    const continueBtn = this.shadowRoot.querySelector('[data-continue-btn]');
-    if (continueBtn) {
-      continueBtn.addEventListener('click', () => {
-        eventBus.emit(NAVIGATE, '/preview');
-      });
-    }
-
     const unsub = store.subscribe('selectedTechIds', () => {
       this._render();
     });

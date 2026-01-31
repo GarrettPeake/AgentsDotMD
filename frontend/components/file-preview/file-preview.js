@@ -19,7 +19,6 @@ export class FilePreview extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this._unsubscribers = [];
-    this._activeTab = 'generated';
   }
 
   async connectedCallback() {
@@ -67,12 +66,6 @@ export class FilePreview extends HTMLElement {
       regenerateBtn.addEventListener('click', this._generateAndRender.bind(this));
     }
 
-    // Tab switching
-    var tabBtns = this.shadowRoot.querySelectorAll('[data-tab-btn]');
-    tabBtns.forEach(function (btn) {
-      btn.addEventListener('click', this._handleTabSwitch.bind(this, btn));
-    }.bind(this));
-
     // Subscribe to options changes to regenerate
     var unsubOptions = eventBus.on(OPTIONS_CHANGED, this._generateAndRender.bind(this));
     this._unsubscribers.push(unsubOptions);
@@ -84,58 +77,6 @@ export class FilePreview extends HTMLElement {
     // Subscribe to filename changes
     var unsubFilename = store.subscribe('filename', this._updateFilenameDisplay.bind(this));
     this._unsubscribers.push(unsubFilename);
-  }
-
-  /**
-   * Switches between Generated File and Templates tabs.
-   */
-  _handleTabSwitch(clickedBtn) {
-    var tabName = clickedBtn.getAttribute('data-tab-btn');
-    if (tabName === this._activeTab) {
-      return;
-    }
-
-    this._activeTab = tabName;
-
-    // Update tab button states
-    var allBtns = this.shadowRoot.querySelectorAll('[data-tab-btn]');
-    allBtns.forEach(function (btn) {
-      btn.classList.remove('tab-active');
-    });
-    clickedBtn.classList.add('tab-active');
-
-    // Update tab panels
-    var allPanels = this.shadowRoot.querySelectorAll('[data-tab-panel]');
-    allPanels.forEach(function (panel) {
-      var panelName = panel.getAttribute('data-tab-panel');
-      if (panelName === tabName) {
-        panel.removeAttribute('hidden');
-      } else {
-        panel.setAttribute('hidden', '');
-      }
-    });
-
-    // If switching to templates tab, render the template-preview component
-    if (tabName === 'templates') {
-      this._renderTemplatesTab();
-    }
-  }
-
-  /**
-   * Renders the template-preview component inside the templates tab.
-   */
-  _renderTemplatesTab() {
-    var container = this.shadowRoot.querySelector('[data-templates-content]');
-    if (!container) {
-      return;
-    }
-
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
-    }
-
-    var templatePreview = document.createElement('template-preview');
-    container.appendChild(templatePreview);
   }
 
   /**

@@ -1,0 +1,43 @@
+{
+  "name": "Express.js",
+  "description": "A minimal and flexible Node.js web application framework for building APIs and web servers",
+  "icon": "expressjs.svg",
+  "categories": ["backend"],
+  "options": [
+    {
+      "id": "language",
+      "label": "Language",
+      "type": "single-select",
+      "choices": [
+        { "id": "javascript", "label": "JavaScript", "default": true },
+        { "id": "typescript", "label": "TypeScript" }
+      ]
+    },
+    {
+      "id": "use-middleware",
+      "label": "Use Helmet & CORS Middleware",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my-api",
+      "placeholder": "e.g., my-api"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    "node_modules/",
+    ".env",
+    ".env.local",
+    "dist/",
+    "build/",
+    "coverage/",
+    "*.log",
+    ".DS_Store"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

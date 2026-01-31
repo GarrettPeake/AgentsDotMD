@@ -16,22 +16,22 @@
    -------------------------------------------------------------------------- */
 
 .panel-header {
-  margin-bottom: var(--space-xl, 2rem);
+  margin-bottom: var(--space-sm, 0.5rem);
 }
 
 .panel-title {
-  font-size: var(--text-3xl, 2rem);
+  font-size: var(--text-2xl, 1.5rem);
   font-weight: 900;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  margin: 0 0 var(--space-sm, 0.5rem) 0;
+  margin: 0 0 var(--space-xs, 0.25rem) 0;
   color: var(--color-text, #2B2B2B);
 }
 
 .panel-description {
-  font-size: var(--text-lg, 1.125rem);
+  font-size: var(--text-base, 1rem);
   color: var(--color-muted, #6B6B6B);
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 0;
   max-width: 48rem;
 }
@@ -43,8 +43,8 @@
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md, 1rem);
-  margin-bottom: var(--space-xl, 2rem);
+  gap: var(--space-sm, 0.5rem);
+  margin-bottom: var(--space-md, 1rem);
 }
 
 /* --------------------------------------------------------------------------
@@ -80,7 +80,7 @@ fieldset.collapsed {
 }
 
 fieldset .fieldset-content {
-  padding: var(--space-lg, 1.5rem);
+  padding: var(--space-md, 1rem);
   display: block;
 }
 
@@ -126,7 +126,7 @@ fieldset.collapsed .collapse-indicator {
    -------------------------------------------------------------------------- */
 
 .option-group {
-  margin-bottom: var(--space-lg, 1.5rem);
+  margin-bottom: var(--space-md, 1rem);
 }
 
 .option-group:last-child {

@@ -10,6 +10,7 @@ import { eventBus, NAVIGATE } from './event-bus.js';
 import '../components/app-root/app-root.js';
 
 const COMPONENT_MODULES = [
+  '../components/workspace/workspace.js',
   '../components/tech-catalog/tech-catalog.js',
   '../components/tech-card/tech-card.js',
   '../components/option-panel/option-panel.js',
@@ -38,7 +39,7 @@ async function registerComponents() {
 
 function createRouter(outlet) {
   const router = new Router(outlet);
-  router.register('/', 'tech-catalog');
+  router.register('/', 'workspace-view');
   router.register('/configure', 'option-panel');
   router.register('/preview', 'file-preview');
   router.register('/export', 'delivery-options');

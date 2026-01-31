@@ -2,7 +2,7 @@
   "name": "TypeScript",
   "description": "A typed superset of JavaScript that compiles to plain JavaScript",
   "icon": "typescript.svg",
-  "categories": ["frontend", "backend", "javascript"],
+  "categories": ["language"],
   "options": [
     {
       "id": "strictness",

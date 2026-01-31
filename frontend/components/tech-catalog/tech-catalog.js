@@ -15,6 +15,7 @@ export class TechCatalog extends HTMLElement {
     this._activeCategory = 'all';
     this._searchQuery = '';
     this._unsubscribers = [];
+    this._gridCollapsed = false;
   }
 
   async connectedCallback() {
@@ -66,12 +67,23 @@ export class TechCatalog extends HTMLElement {
       this._handleCardToggle(event.detail);
     });
 
-    const continueBtn = this.shadowRoot.querySelector('[data-continue-btn]');
-    if (continueBtn) {
-      continueBtn.addEventListener('click', () => {
-        const selected = store.get('selectedTechIds');
-        if (selected && selected.length > 0) {
-          eventBus.emit(NAVIGATE, '/configure');
+    const toggleBtn = this.shadowRoot.querySelector('[data-toggle-grid]');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        this._toggleGridCollapse();
+      });
+    }
+
+    const chipsContainer = this.shadowRoot.querySelector('[data-selected-chips]');
+    if (chipsContainer) {
+      chipsContainer.addEventListener('click', (event) => {
+        const removeBtn = event.target.closest('.chip-remove');
+        if (!removeBtn) {
+          return;
+        }
+        const techId = removeBtn.getAttribute('data-tech-id');
+        if (techId) {
+          this._deselectTech(techId);
         }
       });
     }
@@ -294,15 +306,6 @@ export class TechCatalog extends HTMLElement {
       }
     }
 
-    const continueBtn = this.shadowRoot.querySelector('[data-continue-btn]');
-    if (continueBtn) {
-      if (count > 0) {
-        continueBtn.removeAttribute('disabled');
-      } else {
-        continueBtn.setAttribute('disabled', '');
-      }
-    }
-
     const grid = this.shadowRoot.querySelector('[data-catalog-grid]');
     if (grid) {
       const cards = grid.querySelectorAll('tech-card');
@@ -321,6 +324,115 @@ export class TechCatalog extends HTMLElement {
     }
 
     this._updateIncompatibleStates(selectedIds);
+    this._renderChips(selectedIds);
+    this._updateCollapseState(selectedIds);
+  }
+
+  _renderChips(selectedIds) {
+    const chipsContainer = this.shadowRoot.querySelector('[data-selected-chips]');
+    if (!chipsContainer) {
+      return;
+    }
+
+    while (chipsContainer.firstChild) {
+      chipsContainer.removeChild(chipsContainer.firstChild);
+    }
+
+    if (selectedIds.length === 0) {
+      chipsContainer.setAttribute('hidden', '');
+      return;
+    }
+
+    chipsContainer.removeAttribute('hidden');
+
+    const technologies = store.get('technologies') || [];
+    for (const techId of selectedIds) {
+      const tech = technologies.find(function(t) { return t.id === techId; });
+      const chipName = tech ? tech.name : techId;
+
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+
+      const label = document.createElement('span');
+      label.textContent = chipName;
+      chip.appendChild(label);
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'chip-remove';
+      removeBtn.setAttribute('data-tech-id', techId);
+      removeBtn.setAttribute('type', 'button');
+      removeBtn.setAttribute('aria-label', 'Remove ' + chipName);
+      removeBtn.textContent = '\u00D7';
+      chip.appendChild(removeBtn);
+
+      chipsContainer.appendChild(chip);
+    }
+  }
+
+  _updateCollapseState(selectedIds) {
+    const toggleBtn = this.shadowRoot.querySelector('[data-toggle-grid]');
+    const catalogBody = this.shadowRoot.querySelector('[data-catalog-body]');
+    const catalogFooter = this.shadowRoot.querySelector('[data-catalog-footer]');
+
+    if (!toggleBtn || !catalogBody) {
+      return;
+    }
+
+    if (selectedIds.length > 0) {
+      toggleBtn.removeAttribute('hidden');
+      // Auto-collapse grid when selections exist
+      if (!this._gridCollapsed) {
+        this._gridCollapsed = true;
+        catalogBody.classList.add('collapsed');
+        if (catalogFooter) {
+          catalogFooter.setAttribute('hidden', '');
+        }
+        toggleBtn.textContent = 'Edit Stack';
+      }
+    } else {
+      toggleBtn.setAttribute('hidden', '');
+      this._gridCollapsed = false;
+      catalogBody.classList.remove('collapsed');
+      if (catalogFooter) {
+        catalogFooter.removeAttribute('hidden');
+      }
+    }
+  }
+
+  _toggleGridCollapse() {
+    const catalogBody = this.shadowRoot.querySelector('[data-catalog-body]');
+    const toggleBtn = this.shadowRoot.querySelector('[data-toggle-grid]');
+    const catalogFooter = this.shadowRoot.querySelector('[data-catalog-footer]');
+
+    if (!catalogBody || !toggleBtn) {
+      return;
+    }
+
+    this._gridCollapsed = !this._gridCollapsed;
+
+    if (this._gridCollapsed) {
+      catalogBody.classList.add('collapsed');
+      if (catalogFooter) {
+        catalogFooter.setAttribute('hidden', '');
+      }
+      toggleBtn.textContent = 'Edit Stack';
+    } else {
+      catalogBody.classList.remove('collapsed');
+      if (catalogFooter) {
+        catalogFooter.removeAttribute('hidden');
+      }
+      toggleBtn.textContent = 'Collapse';
+    }
+  }
+
+  _deselectTech(techId) {
+    const currentSelected = [...(store.get('selectedTechIds') || [])];
+    const index = currentSelected.indexOf(techId);
+    if (index !== -1) {
+      currentSelected.splice(index, 1);
+      eventBus.emit(TECH_DESELECTED, { techId: techId });
+      store.set('selectedTechIds', currentSelected);
+    }
   }
 }
 

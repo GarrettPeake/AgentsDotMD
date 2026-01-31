@@ -16,22 +16,22 @@
    -------------------------------------------------------------------------- */
 
 .preview-header {
-  margin-bottom: var(--space-xl, 2rem);
+  margin-bottom: var(--space-sm, 0.5rem);
 }
 
 .preview-title {
-  font-size: var(--text-3xl, 2rem);
+  font-size: var(--text-2xl, 1.5rem);
   font-weight: 900;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  margin: 0 0 var(--space-sm, 0.5rem) 0;
+  margin: 0 0 var(--space-xs, 0.25rem) 0;
   color: var(--color-text, #2B2B2B);
 }
 
 .preview-description {
-  font-size: var(--text-lg, 1.125rem);
+  font-size: var(--text-base, 1rem);
   color: var(--color-muted, #6B6B6B);
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 0;
   max-width: 48rem;
 }
@@ -102,58 +102,10 @@
 }
 
 /* --------------------------------------------------------------------------
-   Tab Bar
+   Preview Panel
    -------------------------------------------------------------------------- */
 
-.tab-bar {
-  display: flex;
-  border: 2px solid var(--color-border, #2B2B2B);
-  border-top: none;
-  background-color: var(--color-bg, #FAF6F1);
-}
-
-.tab-btn {
-  flex: 1;
-  padding: var(--space-sm, 0.5rem) var(--space-lg, 1.5rem);
-  font-size: var(--text-base, 1rem);
-  font-weight: 700;
-  font-family: inherit;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background-color: var(--color-bg, #FAF6F1);
-  color: var(--color-muted, #6B6B6B);
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
-  user-select: none;
-}
-
-.tab-btn:hover {
-  background-color: var(--color-surface, #FFFFFF);
-  color: var(--color-text, #2B2B2B);
-  box-shadow: none;
-  transform: none;
-}
-
-.tab-btn + .tab-btn {
-  border-left: 2px solid var(--color-border, #2B2B2B);
-}
-
-.tab-btn.tab-active {
-  background-color: var(--color-surface, #FFFFFF);
-  color: var(--color-text, #2B2B2B);
-  box-shadow: inset 0 4px 0 var(--color-accent, #D94F04);
-  border-bottom: 3px solid var(--color-accent, #D94F04);
-  font-weight: 900;
-}
-
-/* --------------------------------------------------------------------------
-   Tab Panels
-   -------------------------------------------------------------------------- */
-
-.tab-panel {
+.preview-panel {
   border: 2px solid var(--color-border, #2B2B2B);
   border-top: none;
   background-color: var(--color-surface, #FFFFFF);
@@ -162,16 +114,8 @@
   overflow-y: auto;
 }
 
-.tab-panel[hidden] {
-  display: none;
-}
-
 .preview-content {
   padding: 0;
-}
-
-.templates-content {
-  padding: var(--space-md, 1rem);
 }
 
 /* --------------------------------------------------------------------------

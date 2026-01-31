@@ -2,7 +2,7 @@
   "name": "Docker",
   "description": "A platform for building, shipping, and running applications in containers with consistent environments",
   "icon": "docker.svg",
-  "categories": ["devops", "backend"],
+  "categories": ["devops"],
   "options": [
     {
       "id": "compose",
