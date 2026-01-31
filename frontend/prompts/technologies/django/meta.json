@@ -1,0 +1,45 @@
+{
+  "name": "Django",
+  "description": "A high-level Python web framework for rapid development and clean, pragmatic design",
+  "icon": "django.svg",
+  "categories": ["backend", "frontend", "python"],
+  "options": [
+    {
+      "id": "api-style",
+      "label": "API Style",
+      "type": "single-select",
+      "choices": [
+        { "id": "templates", "label": "Django Templates", "default": true },
+        { "id": "drf", "label": "Django REST Framework" },
+        { "id": "ninja", "label": "Django Ninja" }
+      ]
+    },
+    {
+      "id": "use-celery",
+      "label": "Use Celery for Background Tasks",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "myproject",
+      "placeholder": "e.g., myproject"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    "__pycache__/",
+    "*.pyc",
+    ".venv/",
+    "venv/",
+    ".env",
+    "db.sqlite3",
+    "media/",
+    "staticfiles/",
+    "*.egg-info/"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

@@ -1,0 +1,46 @@
+{
+  "name": "Rust",
+  "description": "A systems programming language focused on safety, speed, and concurrency with zero-cost abstractions",
+  "icon": "rust.svg",
+  "categories": ["backend", "cross-platform"],
+  "options": [
+    {
+      "id": "async-runtime",
+      "label": "Async Runtime",
+      "type": "single-select",
+      "choices": [
+        { "id": "tokio", "label": "Tokio", "default": true },
+        { "id": "async-std", "label": "async-std" },
+        { "id": "none", "label": "No async runtime" }
+      ]
+    },
+    {
+      "id": "use-testing",
+      "label": "Include Testing Conventions",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "use-error-handling",
+      "label": "Include Error Handling Guidelines",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Crate Name",
+      "type": "freeform",
+      "default": "my-project",
+      "placeholder": "e.g., my-project"
+    }
+  ],
+  "templates": ["Cargo.toml"],
+  "gitignore": [
+    "/target",
+    "Cargo.lock",
+    "**/*.rs.bk",
+    ".env"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Next.js",
+  "description": "A React framework for production with hybrid static and server rendering, route handlers, and built-in optimizations",
+  "icon": "nextjs.svg",
+  "categories": ["frontend", "backend", "javascript"],
+  "options": [
+    {
+      "id": "router",
+      "label": "Router",
+      "type": "single-select",
+      "choices": [
+        { "id": "app", "label": "App Router", "default": true },
+        { "id": "pages", "label": "Pages Router" }
+      ]
+    },
+    {
+      "id": "language",
+      "label": "Language",
+      "type": "single-select",
+      "choices": [
+        { "id": "typescript", "label": "TypeScript", "default": true },
+        { "id": "javascript", "label": "JavaScript" }
+      ]
+    },
+    {
+      "id": "use-server-components",
+      "label": "Prefer Server Components",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "use-testing",
+      "label": "Include Testing Conventions",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my-nextjs-app",
+      "placeholder": "e.g., my-nextjs-app"
+    }
+  ],
+  "templates": ["next.config.mjs"],
+  "gitignore": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    ".env",
+    ".env.local",
+    ".env.production.local"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

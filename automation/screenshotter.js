@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const fs = require('fs');
 const path = require('path');
 
 const BASE_URL = process.argv[2] || 'http://localhost:8787';
@@ -59,6 +60,17 @@ async function waitForComponent(page, componentTag, innerSelector, timeout = 100
 }
 
 async function run() {
+  // Clear old screenshots
+  if (fs.existsSync(SCREENSHOTS_DIR)) {
+    const old = fs.readdirSync(SCREENSHOTS_DIR).filter(f => f.endsWith('.png'));
+    for (const file of old) {
+      fs.unlinkSync(path.join(SCREENSHOTS_DIR, file));
+    }
+    console.log(`Cleared ${old.length} old screenshots\n`);
+  } else {
+    fs.mkdirSync(SCREENSHOTS_DIR, { recursive: true });
+  }
+
   console.log(`Starting screenshot capture against ${BASE_URL}\n`);
 
   const browser = await chromium.launch();
@@ -311,7 +323,7 @@ async function run() {
 
   await browser.close();
 
-  const files = require('fs').readdirSync(SCREENSHOTS_DIR).filter(f => f.endsWith('.png'));
+  const files = fs.readdirSync(SCREENSHOTS_DIR).filter(f => f.endsWith('.png'));
   console.log(`\nDone! ${files.length} screenshots saved to automation/screenshots/`);
 }
 

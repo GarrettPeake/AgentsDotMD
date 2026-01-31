@@ -1,0 +1,19 @@
+.PHONY: build run test lint clean
+
+MODULE := {{project-name}}
+BINARY := $(notdir $(MODULE))
+
+build:
+	go build -o bin/$(BINARY) ./cmd/$(BINARY)
+
+run:
+	go run ./cmd/$(BINARY)
+
+test:
+	go test ./... -v -race -count=1
+
+lint:
+	golangci-lint run ./...
+
+clean:
+	rm -rf bin/

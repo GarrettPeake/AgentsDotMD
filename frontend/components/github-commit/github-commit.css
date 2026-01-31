@@ -18,7 +18,7 @@
    -------------------------------------------------------------------------- */
 
 .commit-header {
-  margin-bottom: var(--space-xl, 2rem);
+  margin-bottom: var(--space-lg, 1.5rem);
 }
 
 .commit-title {
@@ -42,7 +42,7 @@
    -------------------------------------------------------------------------- */
 
 .auth-section {
-  margin-bottom: var(--space-xl, 2rem);
+  margin-bottom: var(--space-md, 1rem);
   border: 2px solid var(--color-border, #2B2B2B);
   padding: var(--space-lg, 1.5rem);
   background-color: var(--color-surface, #FFFFFF);
@@ -106,6 +106,58 @@
   font-family: var(--font-mono, monospace);
   background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Auth features list (unauthenticated state)
+   -------------------------------------------------------------------------- */
+
+.auth-features {
+  margin-top: var(--space-lg, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  border-top: 2px solid var(--color-border, #2B2B2B);
+  padding-top: var(--space-md, 1rem);
+}
+
+.auth-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md, 1rem);
+}
+
+.auth-feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  font-family: var(--font-mono, monospace);
+  color: var(--color-surface, #FFFFFF);
+  background-color: var(--color-text, #2B2B2B);
+  border: 2px solid var(--color-border, #2B2B2B);
+}
+
+.auth-feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.auth-feature-text strong {
+  font-size: var(--text-base, 1rem);
+  font-weight: 900;
+  color: var(--color-text, #2B2B2B);
+}
+
+.auth-feature-text span {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--color-muted, #6B6B6B);
+  line-height: 1.5;
 }
 
 .auth-user-info {

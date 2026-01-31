@@ -159,7 +159,7 @@ export class FilePreview extends HTMLElement {
   }
 
   /**
-   * Renders each fragment as an editable block using template cloning.
+   * Renders fragments grouped by technology, each in a collapsible accordion.
    */
   _renderFragments() {
     var container = this.shadowRoot.querySelector('[data-preview-content]');
@@ -175,95 +175,146 @@ export class FilePreview extends HTMLElement {
     var localEdits = store.get('localEdits') || {};
     var technologies = store.get('technologies') || [];
     var options = store.get('options') || {};
-    var tpl = this.shadowRoot.querySelector('[data-template-fragment-block]');
+    var fragmentTpl = this.shadowRoot.querySelector('[data-template-fragment-block]');
+    var groupTpl = this.shadowRoot.querySelector('[data-template-tech-group]');
 
-    if (!tpl) {
+    if (!fragmentTpl || !groupTpl) {
       return;
     }
 
     // Filter fragments the same way the generator does
     var filtered = this._filterFragments(fragments, options);
 
+    // Group fragments by technology
+    var groups = [];
+    var groupMap = {};
     for (var i = 0; i < filtered.length; i++) {
-      var fragment = filtered[i];
-      var clone = tpl.content.cloneNode(true);
-      var block = clone.querySelector('.fragment-block');
-      var techSpan = clone.querySelector('[data-fragment-tech]');
-      var categorySpan = clone.querySelector('[data-fragment-category]');
-      var codeEl = clone.querySelector('[data-fragment-code]');
-      var editBtn = clone.querySelector('[data-edit-btn]');
-      var suggestBtn = clone.querySelector('[data-suggest-btn]');
-      var editArea = clone.querySelector('[data-edit-area]');
-      var displayArea = clone.querySelector('[data-fragment-display]');
-      var textarea = clone.querySelector('[data-fragment-textarea]');
-      var saveBtn = clone.querySelector('[data-save-btn]');
-      var cancelBtn = clone.querySelector('[data-cancel-btn]');
-      var editedBadge = clone.querySelector('[data-edited-badge]');
+      var frag = filtered[i];
+      var techId = (frag.metadata && frag.metadata.technology) || 'unknown';
+      if (!groupMap[techId]) {
+        groupMap[techId] = { techId: techId, fragments: [] };
+        groups.push(groupMap[techId]);
+      }
+      groupMap[techId].fragments.push(frag);
+    }
 
-      var fragmentId = fragment.id;
-      var techId = (fragment.metadata && fragment.metadata.technology) || '';
-      var category = (fragment.metadata && fragment.metadata.category) || '';
-      var tech = technologies.find(function (t) { return t.id === techId; });
-      var techName = tech ? tech.name : techId;
+    var isFirstGroup = true;
+    for (var g = 0; g < groups.length; g++) {
+      var group = groups[g];
+      var tech = technologies.find(function (t) { return t.id === group.techId; });
+      var techName = tech ? tech.name : group.techId;
 
-      // Determine content: use local edit if exists, otherwise original
-      var content = localEdits[fragmentId] !== undefined
-        ? localEdits[fragmentId]
-        : fragment.content;
-      var isEdited = localEdits[fragmentId] !== undefined;
+      var groupClone = groupTpl.content.cloneNode(true);
+      var groupEl = groupClone.querySelector('[data-tech-group]');
+      var groupHeader = groupClone.querySelector('[data-tech-group-header]');
+      var groupNameEl = groupClone.querySelector('[data-tech-group-name]');
+      var groupCountEl = groupClone.querySelector('[data-tech-group-count]');
+      var groupBody = groupClone.querySelector('[data-tech-group-body]');
+      var groupArrow = groupClone.querySelector('[data-group-arrow]');
 
-      if (block) {
-        block.setAttribute('data-fragment-id', fragmentId);
-        if (isEdited) {
-          block.classList.add('edited');
+      if (groupNameEl) {
+        groupNameEl.textContent = techName;
+      }
+      if (groupCountEl) {
+        groupCountEl.textContent = group.fragments.length + (group.fragments.length === 1 ? ' fragment' : ' fragments');
+      }
+      if (groupArrow) {
+        groupArrow.textContent = '\u25BC';
+      }
+
+      // Collapse all groups except the first
+      if (!isFirstGroup && groupEl) {
+        groupEl.classList.add('collapsed');
+      }
+
+      // Toggle collapse on group header click
+      if (groupHeader && groupEl) {
+        (function (el) {
+          groupHeader.addEventListener('click', function () {
+            el.classList.toggle('collapsed');
+          });
+        })(groupEl);
+      }
+
+      // Render fragments inside the group
+      for (var fi = 0; fi < group.fragments.length; fi++) {
+        var fragment = group.fragments[fi];
+        var clone = fragmentTpl.content.cloneNode(true);
+        var block = clone.querySelector('.fragment-block');
+        var categorySpan = clone.querySelector('[data-fragment-category]');
+        var codeEl = clone.querySelector('[data-fragment-code]');
+        var editBtn = clone.querySelector('[data-edit-btn]');
+        var suggestBtn = clone.querySelector('[data-suggest-btn]');
+        var editArea = clone.querySelector('[data-edit-area]');
+        var displayArea = clone.querySelector('[data-fragment-display]');
+        var textarea = clone.querySelector('[data-fragment-textarea]');
+        var saveBtn = clone.querySelector('[data-save-btn]');
+        var cancelBtn = clone.querySelector('[data-cancel-btn]');
+        var editedBadge = clone.querySelector('[data-edited-badge]');
+
+        var fragmentId = fragment.id;
+        var category = (fragment.metadata && fragment.metadata.category) || '';
+
+        // Determine content: use local edit if exists, otherwise original
+        var content = localEdits[fragmentId] !== undefined
+          ? localEdits[fragmentId]
+          : fragment.content;
+        var isEdited = localEdits[fragmentId] !== undefined;
+
+        if (block) {
+          block.setAttribute('data-fragment-id', fragmentId);
+          if (isEdited) {
+            block.classList.add('edited');
+          }
+        }
+
+        if (categorySpan) {
+          categorySpan.textContent = category;
+        }
+
+        if (codeEl) {
+          codeEl.textContent = content;
+        }
+
+        if (editedBadge && isEdited) {
+          editedBadge.removeAttribute('hidden');
+        }
+
+        // Bind edit button
+        if (editBtn) {
+          editBtn.addEventListener('click',
+            this._handleEditClick.bind(this, block, displayArea, editArea, textarea, content)
+          );
+        }
+
+        // Bind save button
+        if (saveBtn) {
+          saveBtn.addEventListener('click',
+            this._handleSaveClick.bind(this, fragmentId, block, displayArea, editArea, textarea, codeEl, editedBadge, fragment)
+          );
+        }
+
+        // Bind cancel button
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click',
+            this._handleCancelClick.bind(this, displayArea, editArea, textarea)
+          );
+        }
+
+        // Bind suggest change button
+        if (suggestBtn) {
+          suggestBtn.addEventListener('click',
+            this._handleSuggestClick.bind(this, fragment, textarea, displayArea, editArea)
+          );
+        }
+
+        if (groupBody) {
+          groupBody.appendChild(clone);
         }
       }
 
-      if (techSpan) {
-        techSpan.textContent = techName;
-      }
-
-      if (categorySpan) {
-        categorySpan.textContent = category;
-      }
-
-      if (codeEl) {
-        codeEl.textContent = content;
-      }
-
-      if (editedBadge && isEdited) {
-        editedBadge.removeAttribute('hidden');
-      }
-
-      // Bind edit button
-      if (editBtn) {
-        editBtn.addEventListener('click',
-          this._handleEditClick.bind(this, block, displayArea, editArea, textarea, content)
-        );
-      }
-
-      // Bind save button
-      if (saveBtn) {
-        saveBtn.addEventListener('click',
-          this._handleSaveClick.bind(this, fragmentId, block, displayArea, editArea, textarea, codeEl, editedBadge, fragment)
-        );
-      }
-
-      // Bind cancel button
-      if (cancelBtn) {
-        cancelBtn.addEventListener('click',
-          this._handleCancelClick.bind(this, displayArea, editArea, textarea)
-        );
-      }
-
-      // Bind suggest change button
-      if (suggestBtn) {
-        suggestBtn.addEventListener('click',
-          this._handleSuggestClick.bind(this, fragment, textarea, displayArea, editArea)
-        );
-      }
-
-      container.appendChild(clone);
+      container.appendChild(groupClone);
+      isFirstGroup = false;
     }
   }
 

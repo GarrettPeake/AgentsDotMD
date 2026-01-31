@@ -108,15 +108,35 @@ export class OptionPanel extends HTMLElement {
 
       const fieldset = document.createElement('fieldset');
       const legend = document.createElement('legend');
-      legend.textContent = tech.name;
+      const collapseIndicator = document.createElement('span');
+      collapseIndicator.classList.add('collapse-indicator');
+      collapseIndicator.textContent = '\u25BC';
+      legend.appendChild(collapseIndicator);
+      const legendText = document.createTextNode(' ' + tech.name);
+      legend.appendChild(legendText);
       fieldset.appendChild(legend);
+
+      const contentWrapper = document.createElement('div');
+      contentWrapper.classList.add('fieldset-content');
 
       for (const option of tech.options) {
         const optionEl = this._createOptionElement(techId, option, currentOptions[techId]);
         if (optionEl) {
-          fieldset.appendChild(optionEl);
+          contentWrapper.appendChild(optionEl);
         }
       }
+
+      fieldset.appendChild(contentWrapper);
+
+      // Collapse all except first technology
+      const techIndex = selectedIds.indexOf(techId);
+      if (techIndex > 0) {
+        fieldset.classList.add('collapsed');
+      }
+
+      legend.addEventListener('click', () => {
+        fieldset.classList.toggle('collapsed');
+      });
 
       container.appendChild(fieldset);
     }

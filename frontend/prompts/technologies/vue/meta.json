@@ -1,0 +1,59 @@
+{
+  "name": "Vue",
+  "description": "A progressive JavaScript framework for building user interfaces and single-page applications",
+  "icon": "vue.svg",
+  "categories": ["frontend", "javascript"],
+  "options": [
+    {
+      "id": "language",
+      "label": "Language",
+      "type": "single-select",
+      "choices": [
+        { "id": "typescript", "label": "TypeScript", "default": true },
+        { "id": "javascript", "label": "JavaScript" }
+      ]
+    },
+    {
+      "id": "api-style",
+      "label": "API Style",
+      "type": "single-select",
+      "choices": [
+        { "id": "composition", "label": "Composition API", "default": true },
+        { "id": "options", "label": "Options API" }
+      ]
+    },
+    {
+      "id": "state-management",
+      "label": "State Management",
+      "type": "single-select",
+      "choices": [
+        { "id": "pinia", "label": "Pinia", "default": true },
+        { "id": "none", "label": "None" }
+      ]
+    },
+    {
+      "id": "use-testing",
+      "label": "Include Testing Conventions",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my-vue-app",
+      "placeholder": "e.g., my-vue-app"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    "node_modules/",
+    "dist/",
+    ".env",
+    ".env.local",
+    "*.local",
+    ".vite/"
+  ],
+  "incompatibleWith": ["react"],
+  "combinationsWith": []
+}

@@ -144,7 +144,9 @@
 .tab-btn.tab-active {
   background-color: var(--color-surface, #FFFFFF);
   color: var(--color-text, #2B2B2B);
-  box-shadow: inset 0 3px 0 var(--color-accent, #D94F04);
+  box-shadow: inset 0 4px 0 var(--color-accent, #D94F04);
+  border-bottom: 3px solid var(--color-accent, #D94F04);
+  font-weight: 900;
 }
 
 /* --------------------------------------------------------------------------
@@ -155,7 +157,9 @@
   border: 2px solid var(--color-border, #2B2B2B);
   border-top: none;
   background-color: var(--color-surface, #FFFFFF);
-  min-height: 20rem;
+  min-height: 6rem;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .tab-panel[hidden] {
@@ -171,11 +175,82 @@
 }
 
 /* --------------------------------------------------------------------------
+   Technology Groups
+   -------------------------------------------------------------------------- */
+
+.tech-group {
+  border-bottom: 2px solid var(--color-border, #2B2B2B);
+}
+
+.tech-group:last-child {
+  border-bottom: none;
+}
+
+.tech-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
+  background-color: var(--color-bg, #FAF6F1);
+  border-bottom: 2px solid var(--color-border, #2B2B2B);
+  cursor: pointer;
+  user-select: none;
+}
+
+.tech-group-header:hover {
+  background-color: var(--color-surface, #FFFFFF);
+}
+
+.tech-group.collapsed .tech-group-header {
+  border-bottom: none;
+}
+
+.tech-group.collapsed .tech-group-body {
+  display: none;
+}
+
+.tech-group-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+}
+
+.tech-group-name {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text, #2B2B2B);
+}
+
+.tech-group-count {
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 700;
+  color: var(--color-muted, #6B6B6B);
+}
+
+.collapse-arrow {
+  display: inline-block;
+  font-size: var(--text-xs, 0.75rem);
+  transition: transform 0.2s ease;
+  color: var(--color-muted, #6B6B6B);
+  margin-right: var(--space-xs, 0.25rem);
+}
+
+.tech-group.collapsed .collapse-arrow {
+  transform: rotate(-90deg);
+}
+
+.tech-group-body {
+  border-top: none;
+}
+
+/* --------------------------------------------------------------------------
    Fragment Blocks
    -------------------------------------------------------------------------- */
 
 .fragment-block {
-  border-bottom: 2px solid var(--color-border, #2B2B2B);
+  border-bottom: 1px solid var(--color-border, #2B2B2B);
 }
 
 .fragment-block:last-child {
@@ -191,9 +266,15 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-sm, 0.5rem);
-  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
+  padding: var(--space-xs, 0.25rem) var(--space-md, 1rem);
+  padding-left: var(--space-xl, 2rem);
+  background-color: var(--color-surface, #FFFFFF);
+  border-bottom: 1px solid var(--color-border, #2B2B2B);
+  user-select: none;
+}
+
+.fragment-header:hover {
   background-color: var(--color-bg, #FAF6F1);
-  border-bottom: 2px solid var(--color-border, #2B2B2B);
 }
 
 .fragment-info {
@@ -505,10 +586,27 @@
   .fragment-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-xs, 0.25rem);
+    padding: var(--space-xs, 0.25rem) var(--space-sm, 0.5rem);
+  }
+
+  .fragment-info {
+    width: 100%;
   }
 
   .fragment-actions {
+    width: 100%;
     flex-wrap: wrap;
+    gap: var(--space-xs, 0.25rem);
+  }
+
+  .fragment-edit-btn,
+  .fragment-suggest-btn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    padding: var(--space-xs, 0.25rem) var(--space-xs, 0.25rem);
+    font-size: 0.7rem;
   }
 
   .preview-footer {

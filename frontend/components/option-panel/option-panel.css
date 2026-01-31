@@ -43,7 +43,7 @@
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl, 2rem);
+  gap: var(--space-md, 1rem);
   margin-bottom: var(--space-xl, 2rem);
 }
 
@@ -70,8 +70,22 @@
 fieldset {
   border: 2px solid var(--color-border, #2B2B2B);
   border-radius: 0;
-  padding: var(--space-lg, 1.5rem);
+  padding: 0;
   margin: 0;
+}
+
+fieldset.collapsed {
+  border-color: transparent;
+  border-bottom: 2px solid var(--color-muted, #6B6B6B);
+}
+
+fieldset .fieldset-content {
+  padding: var(--space-lg, 1.5rem);
+  display: block;
+}
+
+fieldset.collapsed .fieldset-content {
+  display: none;
 }
 
 legend {
@@ -85,6 +99,26 @@ legend {
   border: 2px solid var(--color-border, #2B2B2B);
   border-radius: 0;
   line-height: 1.4;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+}
+
+legend:hover {
+  background-color: var(--color-accent-hover, #B84303);
+}
+
+.collapse-indicator {
+  display: inline-block;
+  font-size: var(--text-xs, 0.75rem);
+  transition: transform 0.2s ease;
+  line-height: 1;
+}
+
+fieldset.collapsed .collapse-indicator {
+  transform: rotate(-90deg);
 }
 
 /* --------------------------------------------------------------------------
@@ -381,7 +415,7 @@ legend {
    -------------------------------------------------------------------------- */
 
 @media (max-width: 640px) {
-  fieldset {
+  fieldset .fieldset-content {
     padding: var(--space-md, 1rem);
   }
 

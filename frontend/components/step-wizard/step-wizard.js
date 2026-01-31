@@ -9,7 +9,8 @@ const HASH_TO_STEP = {
   '/': 1,
   '/configure': 2,
   '/preview': 3,
-  '/export': 4
+  '/export': 4,
+  '/github-commit': 4
 };
 
 export class StepWizard extends HTMLElement {

@@ -1,0 +1,44 @@
+{
+  "name": "Tailwind CSS",
+  "description": "A utility-first CSS framework for rapidly building custom user interfaces",
+  "icon": "tailwindcss.svg",
+  "categories": ["frontend", "css"],
+  "options": [
+    {
+      "id": "version",
+      "label": "Tailwind Version",
+      "type": "single-select",
+      "choices": [
+        { "id": "v4", "label": "Tailwind CSS v4", "default": true },
+        { "id": "v3", "label": "Tailwind CSS v3" }
+      ]
+    },
+    {
+      "id": "use-plugins",
+      "label": "Include Plugin Conventions",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "id": "use-design-system",
+      "label": "Include Design System Conventions",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my-app",
+      "placeholder": "e.g., my-app"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    "node_modules/",
+    "dist/",
+    ".env"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

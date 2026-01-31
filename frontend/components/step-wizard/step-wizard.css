@@ -9,7 +9,7 @@
 .steps {
   display: flex;
   align-items: flex-start;
-  gap: 0;
+  gap: var(--space-xs, 0.25rem);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -119,8 +119,13 @@
     font-size: var(--text-xs, 0.75rem);
     font-weight: var(--font-weight-bold, 700);
     color: var(--color-muted, #6B6B6B);
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
     margin-top: var(--space-xs, 0.25rem);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .step[data-state="active"] .step-label {
