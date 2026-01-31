@@ -131,8 +131,48 @@ async function buildTechnology(techId) {
     });
   }
 
+  // Discover template files from the templates directory on disk,
+  // falling back to meta.json entries if the directory doesn't exist.
+  const TEMPLATES_DIR = join(ROOT, 'templates', techId);
+  let templates = [];
+
+  const tmplFiles = await listFiles(TEMPLATES_DIR, '.tmpl');
+  if (tmplFiles.length > 0) {
+    // Auto-discover templates from the file system
+    for (const tmplFile of tmplFiles) {
+      const outputName = tmplFile.replace(/\.tmpl$/, '');
+      const content = await readFile(join(TEMPLATES_DIR, tmplFile), 'utf-8');
+      const variables = [];
+      const varRegex = /\{\{([^}]+)\}\}/g;
+      let match;
+      while ((match = varRegex.exec(content)) !== null) {
+        const varName = match[1].trim();
+        if (!variables.includes(varName)) {
+          variables.push(varName);
+        }
+      }
+      templates.push({
+        sourcePath: `templates/${techId}/${tmplFile}`,
+        outputPath: outputName,
+        variables,
+      });
+    }
+  } else if (meta.templates && meta.templates.length > 0) {
+    // Fallback: expand string entries from meta.json into objects
+    templates = meta.templates.map(t => {
+      if (typeof t === 'string') {
+        return {
+          sourcePath: `templates/${techId}/${t}.tmpl`,
+          outputPath: t,
+          variables: [],
+        };
+      }
+      return t;
+    });
+  }
+
   // Build the technology entry — meta.json is the source of truth for everything
-  // except the fragments list, which comes from the file tree.
+  // except the fragments list and templates, which come from the file tree.
   return {
     id: techId,
     name: meta.name,
@@ -141,7 +181,7 @@ async function buildTechnology(techId) {
     categories: meta.categories || [],
     options: meta.options || [],
     fragments: fragmentFiles,
-    templates: meta.templates || [],
+    templates,
     gitignore: meta.gitignore || [],
     incompatibleWith: meta.incompatibleWith || [],
     combinationsWith: meta.combinationsWith || [],

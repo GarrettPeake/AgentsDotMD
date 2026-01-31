@@ -29,7 +29,7 @@
       "placeholder": "e.g., my_python_project"
     }
   ],
-  "templates": [],
+  "templates": ["pyproject.toml"],
   "gitignore": [
     "__pycache__/",
     "*.pyc",

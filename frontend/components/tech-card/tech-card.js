@@ -130,14 +130,49 @@ export class TechCard extends HTMLElement {
     const name = this.getAttribute('name') || '';
     const description = this.getAttribute('description') || '';
     const categoriesStr = this.getAttribute('categories') || '';
+    const techId = this.getAttribute('tech-id') || '';
 
     nameEl.textContent = name;
     descriptionEl.textContent = description;
     iconEl.textContent = name.charAt(0).toUpperCase();
 
+    // Assign a distinct background color to the icon based on tech ID
+    var iconColor = this._getIconColor(techId);
+    iconEl.style.backgroundColor = iconColor;
+    iconEl.style.color = '#FFFFFF';
+    iconEl.style.borderColor = iconColor;
+
     this._renderCategories(categoriesEl, categoriesStr);
 
     this.setAttribute('aria-selected', String(this.isSelected));
+  }
+
+  /**
+   * Returns a deterministic color for the tech icon based on the tech ID.
+   * Uses a palette of distinct, accessible colors.
+   */
+  _getIconColor(techId) {
+    var palette = [
+      '#D94F04', // orange
+      '#2B6CB0', // blue
+      '#2F855A', // green
+      '#9B2C2C', // red
+      '#6B46C1', // purple
+      '#B7791F', // gold
+      '#2C7A7B', // teal
+      '#744210', // brown
+      '#4A5568', // slate
+      '#C53030', // crimson
+      '#38A169', // emerald
+      '#805AD5', // violet
+    ];
+    // djb2 hash for good distribution across palette
+    var hash = 5381;
+    for (var i = 0; i < techId.length; i++) {
+      hash = ((hash << 5) + hash + techId.charCodeAt(i)) | 0;
+    }
+    var index = ((hash % palette.length) + palette.length) % palette.length;
+    return palette[index];
   }
 
   _renderCategories(container, categoriesStr) {

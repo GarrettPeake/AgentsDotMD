@@ -8,12 +8,16 @@
   contain: content;
 }
 
+:host([hidden]) {
+  display: none;
+}
+
 .card {
   position: relative;
   display: flex;
   align-items: flex-start;
   gap: var(--space-md, 1rem);
-  padding: var(--space-lg, 1.5rem);
+  padding: var(--space-md, 1rem);
   background-color: var(--color-surface, #FFFFFF);
   border: 2px solid var(--color-border, #2B2B2B);
   cursor: pointer;
@@ -73,11 +77,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 2px solid var(--color-border, #2B2B2B);
   background-color: var(--color-bg, #FAF6F1);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1;

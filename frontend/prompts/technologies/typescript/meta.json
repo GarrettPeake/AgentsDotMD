@@ -1,0 +1,53 @@
+{
+  "name": "TypeScript",
+  "description": "A typed superset of JavaScript that compiles to plain JavaScript",
+  "icon": "typescript.svg",
+  "categories": ["frontend", "backend", "javascript"],
+  "options": [
+    {
+      "id": "strictness",
+      "label": "Strictness Level",
+      "type": "single-select",
+      "choices": [
+        { "id": "strict", "label": "Strict (recommended)", "default": true },
+        { "id": "moderate", "label": "Moderate" },
+        { "id": "relaxed", "label": "Relaxed" }
+      ]
+    },
+    {
+      "id": "runtime",
+      "label": "Runtime",
+      "type": "single-select",
+      "choices": [
+        { "id": "node", "label": "Node.js", "default": true },
+        { "id": "deno", "label": "Deno" },
+        { "id": "bun", "label": "Bun" },
+        { "id": "browser", "label": "Browser only" }
+      ]
+    },
+    {
+      "id": "use-testing",
+      "label": "Include Testing Conventions",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my-ts-project",
+      "placeholder": "e.g., my-ts-project"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    "node_modules/",
+    "dist/",
+    "build/",
+    ".env",
+    "*.js.map",
+    "*.d.ts.map"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

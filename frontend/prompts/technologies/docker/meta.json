@@ -1,0 +1,46 @@
+{
+  "name": "Docker",
+  "description": "A platform for building, shipping, and running applications in containers with consistent environments",
+  "icon": "docker.svg",
+  "categories": ["devops", "backend"],
+  "options": [
+    {
+      "id": "compose",
+      "label": "Use Docker Compose",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "multi-stage",
+      "label": "Multi-Stage Builds",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "base-image",
+      "label": "Base Image",
+      "type": "single-select",
+      "choices": [
+        { "id": "alpine", "label": "Alpine", "default": true },
+        { "id": "debian", "label": "Debian Slim" },
+        { "id": "ubuntu", "label": "Ubuntu" }
+      ]
+    },
+    {
+      "id": "project-name",
+      "label": "Service Name",
+      "type": "freeform",
+      "default": "my-app",
+      "placeholder": "e.g., my-app"
+    }
+  ],
+  "templates": ["Dockerfile", "docker-compose.yml"],
+  "gitignore": [
+    ".docker/",
+    "docker-compose.override.yml",
+    ".env",
+    "*.tar"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

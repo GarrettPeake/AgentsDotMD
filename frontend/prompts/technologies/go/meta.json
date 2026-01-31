@@ -1,0 +1,53 @@
+{
+  "name": "Go",
+  "description": "A statically typed, compiled language designed for simplicity, concurrency, and performance",
+  "icon": "go.svg",
+  "categories": ["backend", "cross-platform"],
+  "options": [
+    {
+      "id": "web-framework",
+      "label": "Web Framework",
+      "type": "single-select",
+      "choices": [
+        { "id": "stdlib", "label": "Standard Library (net/http)", "default": true },
+        { "id": "gin", "label": "Gin" },
+        { "id": "echo", "label": "Echo" },
+        { "id": "fiber", "label": "Fiber" }
+      ]
+    },
+    {
+      "id": "use-testing",
+      "label": "Include Testing Conventions",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "use-concurrency",
+      "label": "Include Concurrency Guidelines",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Module Name",
+      "type": "freeform",
+      "default": "github.com/myorg/myproject",
+      "placeholder": "e.g., github.com/myorg/myproject"
+    }
+  ],
+  "templates": ["Makefile"],
+  "gitignore": [
+    "bin/",
+    "vendor/",
+    "*.exe",
+    "*.exe~",
+    "*.dll",
+    "*.so",
+    "*.dylib",
+    "*.test",
+    "*.out",
+    ".env"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}
