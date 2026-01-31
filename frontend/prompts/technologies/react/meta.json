@@ -2,7 +2,7 @@
   "name": "React",
   "description": "A JavaScript library for building user interfaces",
   "icon": "react.svg",
-  "categories": ["frontend", "javascript"],
+  "categories": ["frontend"],
   "options": [
     {
       "id": "language",

@@ -2,7 +2,7 @@
   "name": "Tailwind CSS",
   "description": "A utility-first CSS framework for rapidly building custom user interfaces",
   "icon": "tailwindcss.svg",
-  "categories": ["frontend", "css"],
+  "categories": ["frontend"],
   "options": [
     {
       "id": "version",

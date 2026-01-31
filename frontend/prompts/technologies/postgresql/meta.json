@@ -1,0 +1,40 @@
+{
+  "name": "PostgreSQL",
+  "description": "A powerful open-source relational database with advanced features like JSONB, full-text search, and extensions",
+  "icon": "postgresql.svg",
+  "categories": ["database"],
+  "options": [
+    {
+      "id": "orm",
+      "label": "ORM / Query Builder",
+      "type": "single-select",
+      "choices": [
+        { "id": "none", "label": "Raw SQL", "default": true },
+        { "id": "prisma", "label": "Prisma" },
+        { "id": "drizzle", "label": "Drizzle" },
+        { "id": "sqlalchemy", "label": "SQLAlchemy" }
+      ]
+    },
+    {
+      "id": "use-migrations",
+      "label": "Use Migration Tool",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "database-name",
+      "label": "Database Name",
+      "type": "freeform",
+      "default": "my_database",
+      "placeholder": "e.g., my_database"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    ".env",
+    "*.sql.bak",
+    "pgdata/"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

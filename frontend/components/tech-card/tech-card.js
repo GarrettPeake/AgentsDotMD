@@ -121,7 +121,6 @@ export class TechCard extends HTMLElement {
     const nameEl = this.shadowRoot.querySelector('[data-card-name]');
     const descriptionEl = this.shadowRoot.querySelector('[data-card-description]');
     const iconEl = this.shadowRoot.querySelector('[data-card-icon]');
-    const categoriesEl = this.shadowRoot.querySelector('[data-card-categories]');
 
     if (!nameEl) {
       return;
@@ -129,7 +128,6 @@ export class TechCard extends HTMLElement {
 
     const name = this.getAttribute('name') || '';
     const description = this.getAttribute('description') || '';
-    const categoriesStr = this.getAttribute('categories') || '';
     const techId = this.getAttribute('tech-id') || '';
 
     nameEl.textContent = name;
@@ -141,8 +139,6 @@ export class TechCard extends HTMLElement {
     iconEl.style.backgroundColor = iconColor;
     iconEl.style.color = '#FFFFFF';
     iconEl.style.borderColor = iconColor;
-
-    this._renderCategories(categoriesEl, categoriesStr);
 
     this.setAttribute('aria-selected', String(this.isSelected));
   }
@@ -175,23 +171,6 @@ export class TechCard extends HTMLElement {
     return palette[index];
   }
 
-  _renderCategories(container, categoriesStr) {
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
-    }
-
-    if (!categoriesStr) {
-      return;
-    }
-
-    const categories = categoriesStr.split(',').map(c => c.trim()).filter(Boolean);
-    for (const cat of categories) {
-      const badge = document.createElement('span');
-      badge.className = 'badge';
-      badge.textContent = cat;
-      container.appendChild(badge);
-    }
-  }
 }
 
 customElements.define('tech-card', TechCard);

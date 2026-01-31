@@ -27,14 +27,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  min-width: 2.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  min-width: 1.75rem;
   border: 2px solid var(--color-muted, #6B6B6B);
   background-color: var(--color-surface, #FFFFFF);
   color: var(--color-muted, #6B6B6B);
   font-family: var(--font-mono, monospace);
-  font-size: var(--text-sm, 0.875rem);
+  font-size: var(--text-xs, 0.75rem);
   font-weight: var(--font-weight-bold, 700);
 }
 
@@ -63,7 +63,7 @@
   background-color: var(--color-accent, #D94F04);
   border-color: var(--color-accent, #D94F04);
   color: var(--color-surface, #FFFFFF);
-  box-shadow: 3px 3px 0 var(--color-text, #2B2B2B);
+  box-shadow: 2px 2px 0 var(--color-text, #2B2B2B);
 }
 
 /* --------------------------------------------------------------------------
@@ -108,9 +108,9 @@
 
   .step-connector {
     position: absolute;
-    top: 1.125rem;
-    left: calc(50% + 1.25rem);
-    right: calc(-50% + 1.25rem);
+    top: 0.875rem;
+    left: calc(50% + 1rem);
+    right: calc(-50% + 1rem);
     margin: 0;
   }
 

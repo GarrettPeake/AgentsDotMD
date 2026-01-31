@@ -2,7 +2,7 @@
   "name": "Vue",
   "description": "A progressive JavaScript framework for building user interfaces and single-page applications",
   "icon": "vue.svg",
-  "categories": ["frontend", "javascript"],
+  "categories": ["frontend"],
   "options": [
     {
       "id": "language",

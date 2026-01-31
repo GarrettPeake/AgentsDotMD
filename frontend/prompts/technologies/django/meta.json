@@ -2,7 +2,7 @@
   "name": "Django",
   "description": "A high-level Python web framework for rapid development and clean, pragmatic design",
   "icon": "django.svg",
-  "categories": ["backend", "frontend", "python"],
+  "categories": ["backend"],
   "options": [
     {
       "id": "api-style",

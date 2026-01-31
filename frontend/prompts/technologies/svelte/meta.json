@@ -1,16 +1,16 @@
 {
-  "name": "Next.js",
-  "description": "A React framework for production with hybrid static and server rendering, route handlers, and built-in optimizations",
-  "icon": "nextjs.svg",
-  "categories": ["frontend", "backend"],
+  "name": "Svelte",
+  "description": "A compiler-based UI framework that shifts work from the browser to the build step",
+  "icon": "svelte.svg",
+  "categories": ["frontend"],
   "options": [
     {
-      "id": "router",
-      "label": "Router",
+      "id": "variant",
+      "label": "Variant",
       "type": "single-select",
       "choices": [
-        { "id": "app", "label": "App Router", "default": true },
-        { "id": "pages", "label": "Pages Router" }
+        { "id": "sveltekit", "label": "SvelteKit", "default": true },
+        { "id": "svelte", "label": "Svelte (standalone)" }
       ]
     },
     {
@@ -23,12 +23,6 @@
       ]
     },
     {
-      "id": "use-server-components",
-      "label": "Prefer Server Components",
-      "type": "toggle",
-      "default": true
-    },
-    {
       "id": "use-testing",
       "label": "Include Testing Conventions",
       "type": "toggle",
@@ -38,18 +32,18 @@
       "id": "project-name",
       "label": "Project Name",
       "type": "freeform",
-      "default": "my-nextjs-app",
-      "placeholder": "e.g., my-nextjs-app"
+      "default": "my-svelte-app",
+      "placeholder": "e.g., my-svelte-app"
     }
   ],
-  "templates": ["next.config.mjs"],
+  "templates": [],
   "gitignore": [
     "node_modules/",
-    ".next/",
-    "out/",
+    ".svelte-kit/",
+    "build/",
     ".env",
     ".env.local",
-    ".env.production.local"
+    ".DS_Store"
   ],
   "incompatibleWith": [],
   "combinationsWith": []

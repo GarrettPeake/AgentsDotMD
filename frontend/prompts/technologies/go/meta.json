@@ -2,7 +2,7 @@
   "name": "Go",
   "description": "A statically typed, compiled language designed for simplicity, concurrency, and performance",
   "icon": "go.svg",
-  "categories": ["backend", "cross-platform"],
+  "categories": ["language", "backend"],
   "options": [
     {
       "id": "web-framework",

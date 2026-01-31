@@ -1,0 +1,246 @@
+/* ==========================================================================
+   workspace — Single-page layout with tech selection + live preview
+   Neo-brutalist: solid borders, no radius, offset shadows, bold type
+   ========================================================================== */
+
+:host {
+  display: block;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md, 1rem);
+  width: 100%;
+  min-height: calc(100vh - 8rem);
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Left Panel — Tech Selection + Options
+   -------------------------------------------------------------------------- */
+
+.workspace-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md, 1rem);
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  padding-right: var(--space-sm, 0.5rem);
+}
+
+.left-section[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Right Panel — Live Preview
+   -------------------------------------------------------------------------- */
+
+.workspace-right {
+  position: sticky;
+  top: var(--space-md, 1rem);
+  max-height: calc(100vh - 8rem);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   Empty State
+   -------------------------------------------------------------------------- */
+
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 24rem;
+  border: 2px dashed var(--color-muted, #6B6B6B);
+  background-color: var(--color-surface, #FFFFFF);
+  text-align: center;
+  padding: var(--space-xl, 2rem);
+}
+
+.preview-empty[hidden] {
+  display: none;
+}
+
+.empty-title {
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 900;
+  color: var(--color-text, #2B2B2B);
+  margin: 0 0 var(--space-xs, 0.25rem) 0;
+}
+
+.empty-hint {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--color-muted, #6B6B6B);
+  margin: 0;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: inline;
+}
+
+/* --------------------------------------------------------------------------
+   Active Preview
+   -------------------------------------------------------------------------- */
+
+.preview-active {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--color-border, #2B2B2B);
+  background-color: var(--color-surface, #FFFFFF);
+  max-height: calc(100vh - 8rem);
+}
+
+.preview-active[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Preview Toolbar
+   -------------------------------------------------------------------------- */
+
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm, 0.5rem);
+  padding: var(--space-xs, 0.25rem) var(--space-sm, 0.5rem);
+  border-bottom: 2px solid var(--color-border, #2B2B2B);
+  background-color: var(--color-bg, #FAF6F1);
+  flex-shrink: 0;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+  min-width: 0;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 0.25rem);
+  flex-shrink: 0;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs, 0.25rem) var(--space-sm, 0.5rem);
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--color-surface, #FFFFFF);
+  color: var(--color-text, #2B2B2B);
+  border: 2px solid var(--color-border, #2B2B2B);
+  border-radius: 0;
+  box-shadow: 2px 2px 0 var(--color-border, #2B2B2B);
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+.toolbar-btn:hover {
+  box-shadow: 1px 1px 0 var(--color-border, #2B2B2B);
+  transform: translate(1px, 1px);
+}
+
+.toolbar-btn:active {
+  box-shadow: 0 0 0 var(--color-border, #2B2B2B);
+  transform: translate(2px, 2px);
+}
+
+.toolbar-btn-primary {
+  background-color: var(--color-accent, #D94F04);
+  color: var(--color-surface, #FFFFFF);
+  border-color: var(--color-border, #2B2B2B);
+}
+
+.toolbar-btn-primary:hover {
+  background-color: var(--color-accent-hover, #B84303);
+}
+
+/* --------------------------------------------------------------------------
+   Markdown Output
+   -------------------------------------------------------------------------- */
+
+.markdown-output {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  background:
+    linear-gradient(var(--color-surface, #FFFFFF) 30%, rgba(255,255,255,0)),
+    linear-gradient(rgba(255,255,255,0), var(--color-surface, #FFFFFF) 70%) 0 100%,
+    radial-gradient(farthest-side at 50% 0, rgba(0,0,0,0.12), transparent),
+    radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,0.12), transparent) 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 2rem, 100% 2rem, 100% 0.5rem, 100% 0.5rem;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.markdown-pre {
+  margin: 0;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.markdown-code {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-xs, 0.75rem);
+  line-height: 1.5;
+  color: var(--color-text, #2B2B2B);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — stack on smaller screens
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .workspace-left {
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+  }
+
+  .workspace-right {
+    position: static;
+    max-height: none;
+  }
+
+  .preview-active {
+    max-height: 60vh;
+  }
+
+  .preview-empty {
+    min-height: 12rem;
+    padding: var(--space-md, 1rem);
+  }
+
+  .mobile-only {
+    display: inline;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "FastAPI",
+  "description": "A modern, high-performance Python web framework for building APIs with automatic OpenAPI documentation",
+  "icon": "fastapi.svg",
+  "categories": ["backend"],
+  "options": [
+    {
+      "id": "use-sqlalchemy",
+      "label": "Use SQLAlchemy ORM",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "use-async",
+      "label": "Use Async Endpoints",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "id": "project-name",
+      "label": "Project Name",
+      "type": "freeform",
+      "default": "my-api",
+      "placeholder": "e.g., my-api"
+    }
+  ],
+  "templates": [],
+  "gitignore": [
+    "__pycache__/",
+    "*.py[cod]",
+    ".env",
+    ".env.local",
+    ".venv/",
+    "venv/",
+    "*.egg-info/",
+    "dist/",
+    "build/",
+    ".mypy_cache/",
+    ".pytest_cache/",
+    "htmlcov/",
+    ".coverage",
+    ".DS_Store"
+  ],
+  "incompatibleWith": [],
+  "combinationsWith": []
+}

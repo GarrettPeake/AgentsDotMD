@@ -2,7 +2,7 @@
   "name": "Cloudflare Workers",
   "description": "Serverless JavaScript/TypeScript runtime at the edge",
   "icon": "cloudflare-workers.svg",
-  "categories": ["backend", "serverless", "javascript"],
+  "categories": ["backend"],
   "options": [
     {
       "id": "language",
